@@ -165,22 +165,30 @@ a:hover {
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 480px) {
   .container {
     max-width: 100%;
-    padding: 0 15px;
+    padding: 0 10px;
   }
   
   h1 {
-    font-size: 1.75rem;
-  }
-  
-  h2 {
     font-size: 1.5rem;
   }
   
+  h2 {
+    font-size: 1.3rem;
+  }
+  
   h3 {
-    font-size: 1.125rem;
+    font-size: 1.1rem;
+  }
+  
+  h4 {
+    font-size: 1rem;
+  }
+  
+  body {
+    font-size: 0.9rem;
   }
 }
 

@@ -85,11 +85,6 @@
   line-height: 1.4;
 }
 
-.price {
-  color: #42678b;
-  font-weight: 600;
-  font-size: 0.95rem;
-}
 
 .status-badge {
   padding: 10px 18px;
@@ -292,35 +287,96 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .products-table th,
   .products-table td {
-    padding: 15px 10px;
+    padding: 12px 8px;
+  }
+  
+  .products-table th {
+    font-size: 0.8rem;
   }
   
   .table-product-info {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 8px;
   }
   
   .table-product-image {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
+  }
+  
+  .table-product-image .placeholder {
+    font-size: 1.2rem;
+  }
+  
+  .product-details h4 {
+    font-size: 0.9rem;
+  }
+  
+  .product-details p {
+    font-size: 0.8rem;
+  }
+  
+  .status-badge {
+    padding: 8px 14px;
+    font-size: 0.75rem;
+  }
+  
+  .donor {
+    font-size: 0.85rem;
+  }
+  
+  .reserved-date {
+    font-size: 0.8rem;
   }
   
   .action-buttons {
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
   }
   
   .action-buttons button {
-    min-width: 32px;
-    height: 32px;
+    min-width: 28px;
+    height: 28px;
   }
   
   .action-buttons button svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
+  }
+  
+  .no-actions {
+    font-size: 0.8rem;
+  }
+  
+  .empty-state {
+    padding: 40px 15px;
+    font-size: 1rem;
+  }
+  
+  .transfer-form {
+    padding: 15px;
+  }
+  
+  .transfer-form .form-group label {
+    font-size: 0.8rem;
+  }
+  
+  .transfer-form .form-group input {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+  
+  .transfer-form .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .transfer-form .form-actions button {
+    padding: 10px;
+    font-size: 0.9rem;
   }
 }

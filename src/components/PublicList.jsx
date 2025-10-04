@@ -112,6 +112,11 @@ const PublicList = () => {
               'Escolha um presente especial para o casal!'
             )}
           </p>
+          {coupleNames && coupleNames.pixKey && (
+            <p>
+              Chave PIX para contribuição: <strong>{coupleNames.pixKey}</strong>
+            </p>
+          )}
         </div>
 
         {/* Abas */}

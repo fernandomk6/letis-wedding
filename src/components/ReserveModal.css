@@ -110,11 +110,6 @@
   line-height: 1.4;
 }
 
-.product-details .price {
-  color: #42678b;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
 
 .reserve-form {
   margin-top: 20px;
@@ -208,28 +203,87 @@
 }
 
 /* Responsive */
-@media (max-width: 600px) {
-  .modal-content {
-    margin: 10px;
+@media (max-width: 480px) {
+  .modal-overlay {
+    padding: 15px;
   }
   
-  .modal-header,
+  .modal-content {
+    margin: 0;
+    max-width: 100%;
+  }
+  
+  .modal-header {
+    padding: 15px 20px;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .close-button {
+    font-size: 1.5rem;
+    width: 25px;
+    height: 25px;
+  }
+  
   .modal-body {
-    padding: 20px;
+    padding: 20px 15px;
   }
   
   .product-preview {
     flex-direction: column;
     text-align: center;
+    gap: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
   }
   
   .product-preview .product-image {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     margin: 0 auto;
+  }
+  
+  .product-preview .placeholder-image {
+    font-size: 1.2rem;
+  }
+  
+  .product-details h3 {
+    font-size: 1.1rem;
+  }
+  
+  .product-details p {
+    font-size: 0.85rem;
+  }
+  
+  .form-group {
+    margin-bottom: 18px;
+  }
+  
+  .form-group label {
+    font-size: 0.8rem;
+  }
+  
+  .form-group input {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+  
+  .error-message {
+    padding: 10px 14px;
+    font-size: 0.85rem;
   }
   
   .modal-actions {
     flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .cancel-button,
+  .confirm-button {
+    padding: 12px;
+    font-size: 0.9rem;
   }
 }

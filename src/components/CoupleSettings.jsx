@@ -5,7 +5,8 @@ import './CoupleSettings.css';
 const CoupleSettings = () => {
   const [formData, setFormData] = useState({
     brideName: '',
-    groomName: ''
+    groomName: '',
+    pixKey: ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -20,7 +21,8 @@ const CoupleSettings = () => {
       if (names) {
         setFormData({
           brideName: names.brideName || '',
-          groomName: names.groomName || ''
+          groomName: names.groomName || '',
+          pixKey: names.pixKey || ''
         });
       }
     } catch (error) {
@@ -42,12 +44,12 @@ const CoupleSettings = () => {
     setMessage('');
 
     try {
-      await updateCoupleNames(formData.brideName, formData.groomName);
-      setMessage('Nomes do casal atualizados com sucesso!');
+      await updateCoupleNames(formData.brideName, formData.groomName, formData.pixKey);
+      setMessage('Configurações do casal atualizadas com sucesso!');
       setTimeout(() => setMessage(''), 3000);
     } catch (error) {
-      console.error('Erro ao atualizar nomes:', error);
-      setMessage('Erro ao atualizar nomes do casal');
+      console.error('Erro ao atualizar configurações:', error);
+      setMessage('Erro ao atualizar configurações do casal');
     } finally {
       setIsLoading(false);
     }
@@ -57,7 +59,7 @@ const CoupleSettings = () => {
     <div className="couple-settings">
       <div className="settings-header">
         <h2>💕 Configurações do Casal</h2>
-        <p>Configure os nomes da noiva e do noivo para exibir na lista de presentes</p>
+        <p>Configure os nomes da noiva e do noivo, e a chave PIX para exibir na lista de presentes</p>
       </div>
 
       <form onSubmit={handleSubmit} className="settings-form">
@@ -87,12 +89,24 @@ const CoupleSettings = () => {
           />
         </div>
 
+        <div className="form-group">
+          <label htmlFor="pixKey">Chave PIX para Contribuição (Opcional)</label>
+          <input
+            type="text"
+            id="pixKey"
+            name="pixKey"
+            value={formData.pixKey}
+            onChange={handleChange}
+            placeholder="Ex: (11) 99999-9999 ou email@exemplo.com"
+          />
+        </div>
+
         <button 
           type="submit" 
           className="save-button"
           disabled={isLoading}
         >
-          {isLoading ? 'Salvando...' : 'Salvar Nomes'}
+          {isLoading ? 'Salvando...' : 'Salvar Configurações'}
         </button>
 
         {message && (
@@ -106,7 +120,14 @@ const CoupleSettings = () => {
         <h3>Prévia da Lista Pública</h3>
         <div className="preview-text">
           {formData.brideName && formData.groomName ? (
-            <p>Escolha um presente especial para o casal <strong>{formData.brideName}</strong> e <strong>{formData.groomName}</strong>!</p>
+            <div>
+              <p>Escolha um presente especial para o casal <strong>{formData.brideName}</strong> e <strong>{formData.groomName}</strong>!</p>
+              {formData.pixKey && (
+                <p className="pix-preview">
+                  Chave PIX para contribuição: <strong>{formData.pixKey}</strong>
+                </p>
+              )}
+            </div>
           ) : (
             <p>Escolha um presente especial para o casal!</p>
           )}

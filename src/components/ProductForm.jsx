@@ -6,8 +6,7 @@ const ProductForm = ({ product, onSubmit, onClose }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    imageUrl: '',
-    quantity: 1
+    imageUrl: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -17,8 +16,7 @@ const ProductForm = ({ product, onSubmit, onClose }) => {
       setFormData({
         title: product.title || '',
         description: product.description || '',
-        imageUrl: product.imageUrl || '',
-        quantity: product.quantity || 1
+        imageUrl: product.imageUrl || ''
       });
     }
   }, [product]);
@@ -30,8 +28,7 @@ const ProductForm = ({ product, onSubmit, onClose }) => {
 
     try {
       const submitData = {
-        ...formData,
-        quantity: parseInt(formData.quantity) || 1
+        ...formData
       };
 
       await onSubmit(submitData);
@@ -130,19 +127,6 @@ const ProductForm = ({ product, onSubmit, onClose }) => {
               value={formData.imageUrl}
               onChange={handleChange}
               placeholder="https://exemplo.com/imagem.jpg"
-              disabled={loading}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="quantity">Quantidade</label>
-            <input
-              type="number"
-              id="quantity"
-              name="quantity"
-              value={formData.quantity}
-              onChange={handleChange}
-              min="1"
               disabled={loading}
             />
           </div>

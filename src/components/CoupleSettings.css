@@ -138,6 +138,17 @@
   font-weight: 600;
 }
 
+.pix-preview {
+  color: #62809a;
+  font-size: 1.1rem;
+  margin: 10px 0 0 0;
+}
+
+.pix-preview strong {
+  color: #244667;
+  font-weight: 600;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .couple-settings {
@@ -166,14 +177,27 @@
 @media (max-width: 480px) {
   .couple-settings {
     padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .settings-header {
+    margin-bottom: 20px;
   }
   
   .settings-header h2 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+  }
+  
+  .settings-header p {
+    font-size: 0.85rem;
   }
   
   .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
   }
   
   .form-group input {
@@ -183,6 +207,31 @@
   
   .save-button {
     padding: 12px 18px;
+    font-size: 0.85rem;
+  }
+  
+  .message {
+    margin-top: 15px;
+    padding: 10px 14px;
     font-size: 0.9rem;
+  }
+  
+  .preview-section {
+    margin-top: 25px;
+    padding: 18px;
+  }
+  
+  .preview-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+  
+  .preview-text p {
+    font-size: 0.95rem;
+  }
+  
+  .pix-preview {
+    font-size: 0.95rem;
+    margin: 8px 0 0 0;
   }
 }

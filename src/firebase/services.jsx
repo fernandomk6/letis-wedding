@@ -285,13 +285,14 @@ export const reservationService = {
 };
 
 /* Couple Settings operations */
-export const updateCoupleNames = async (brideName, groomName) => {
+export const updateCoupleNames = async (brideName, groomName, pixKey) => {
   const settingsRef = doc(db, COUPLE_SETTINGS_COLLECTION, 'names');
   
   try {
     await updateDoc(settingsRef, {
       brideName: brideName.trim(),
       groomName: groomName.trim(),
+      pixKey: pixKey.trim(),
       updatedAt: serverTimestamp()
     });
   } catch (error) {
@@ -300,6 +301,7 @@ export const updateCoupleNames = async (brideName, groomName) => {
       await setDoc(settingsRef, {
         brideName: brideName.trim(),
         groomName: groomName.trim(),
+        pixKey: pixKey.trim(),
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       });

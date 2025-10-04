@@ -131,17 +131,39 @@ body.login-modal-open {
 /* Responsive */
 @media (max-width: 480px) {
   .login-container {
-    padding: 20px;
+    padding: 15px;
   }
   
   .login-card {
-    padding: 30px 20px;
+    padding: 25px 15px;
     margin: 0;
-    min-width: 280px;
+    min-width: 260px;
     max-width: 100%;
   }
   
   .login-header h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+  }
+  
+  .login-header p {
+    font-size: 0.9rem;
+  }
+  
+  .form-group label {
+    font-size: 0.8rem;
+  }
+  
+  .form-group input {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+  
+  .login-button {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+  
+  .login-footer p {
+    font-size: 0.75rem;
   }
 }

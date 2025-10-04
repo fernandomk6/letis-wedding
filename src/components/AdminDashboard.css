@@ -267,12 +267,53 @@
 }
 
 @media (max-width: 480px) {
+  .admin-main {
+    padding: 15px 10px;
+  }
+  
   .dashboard-header h1 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
+  }
+  
+  .tab-button {
+    padding: 10px 16px;
+    font-size: 0.85rem;
   }
   
   .add-product-button {
-    padding: 10px 20px;
+    padding: 10px 18px;
+    font-size: 0.85rem;
+  }
+  
+  .view-public-button,
+  .copy-link-button {
+    padding: 10px 18px;
+    font-size: 0.85rem;
+  }
+  
+  .filters-section {
+    padding: 20px 15px;
+  }
+  
+  .filter-group label {
+    font-size: 0.8rem;
+  }
+  
+  .filter-group input {
+    padding: 10px 14px;
     font-size: 0.9rem;
+  }
+  
+  .stat-card h3 {
+    font-size: 0.6rem;
+    padding: 10px;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .loading-container p {
+    font-size: 1rem;
   }
 }

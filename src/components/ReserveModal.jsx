@@ -34,14 +34,6 @@ const ReserveModal = ({ product, onClose, onSuccess }) => {
     }
   };
 
-  const formatPrice = (price) => {
-    if (!price) return '';
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(price);
-  };
-
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -65,9 +57,6 @@ const ReserveModal = ({ product, onClose, onSuccess }) => {
             <div className="product-details">
               <h3>{product.title}</h3>
               <p>{product.description}</p>
-              {product.price && (
-                <div className="price">{formatPrice(product.price)}</div>
-              )}
             </div>
           </div>
           

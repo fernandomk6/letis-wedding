@@ -80,13 +80,31 @@
 }
 
 @media (max-width: 480px) {
+  .admin-header-content {
+    padding: 12px 15px;
+    gap: 12px;
+    text-align: center;
+  }
+  
   .admin-logo h1 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+  }
+  
+  .admin-logo p {
+    font-size: 0.8rem;
+  }
+  
+  .admin-actions {
+    gap: 12px;
   }
   
   .admin-badge,
   .signout-button {
-    font-size: 0.8rem;
-    padding: 10px 18px;
+    font-size: 0.75rem;
+    padding: 8px 16px;
+  }
+
+  .admin-badge {
+    display: none;
   }
 }

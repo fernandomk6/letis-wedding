@@ -11,14 +11,6 @@ const ProductTable = ({
 }) => {
   const [transferModal, setTransferModal] = useState(null);
 
-  const formatPrice = (price) => {
-    if (!price) return 'Não informado';
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(price);
-  };
-
   const formatDate = (date) => {
     if (!date) return '-';
     return new Intl.DateTimeFormat('pt-BR', {
@@ -58,7 +50,6 @@ const ProductTable = ({
           <thead>
             <tr>
               <th>Presente</th>
-              <th>Preço</th>
               <th>Status</th>
               <th>Doador</th>
               <th>Data Reserva</th>
@@ -81,7 +72,6 @@ const ProductTable = ({
                     <p>{product.description}</p>
                   </div>
                 </td>
-                <td className="price">{formatPrice(product.price)}</td>
                 <td className="status">
                   <span className={`status-badge ${product.reservedBy ? 'reserved' : 'available'}`}>
                     {product.reservedBy ? 'Reservado' : 'Disponível'}
