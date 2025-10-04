@@ -14,7 +14,7 @@
 .product-card.reserved {
   opacity: 0.85;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border: 2px solid #62809a;
+  border: 1px solid #D8e8f2;
 }
 
 .product-image {
