@@ -73,7 +73,7 @@
 .admin-indicator {
   background: linear-gradient(135deg, #88ccdd 0%, #62809a 100%);
   color: white;
-  padding: 8px 16px;
+  padding: 10px 18px;
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 500;
@@ -103,12 +103,12 @@
   .admin-button,
   .admin-indicator {
     font-size: 0.8rem;
-    padding: 6px 12px;
+    padding: 10px 18px;
   }
   
   .login-button {
     font-size: 0.8rem;
-    padding: 8px 16px;
+    padding: 10px 18px;
   }
 }
 
@@ -127,6 +127,6 @@
   .admin-indicator,
   .login-button {
     font-size: 0.8rem;
-    padding: 6px 12px;
+    padding: 10px 18px;
   }
 }
