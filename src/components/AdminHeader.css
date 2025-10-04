@@ -1,0 +1,92 @@
+.admin-header {
+  background: white;
+  box-shadow: 0 2px 20px rgba(36, 70, 103, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-logo h1 {
+  color: #244667;
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.admin-logo p {
+  color: #62809a;
+  font-size: 0.9rem;
+  margin: 5px 0 0 0;
+  font-weight: 400;
+}
+
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.admin-badge {
+  background: linear-gradient(135deg, #88ccdd 0%, #62809a 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.signout-button {
+  background: #ffebee;
+  color: #c62828;
+  border: 2px solid #c62828;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.signout-button:hover {
+  background: #c62828;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-header-content {
+    padding: 15px 20px;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .admin-logo h1 {
+    font-size: 1.6rem;
+  }
+  
+  .admin-actions {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-logo h1 {
+    font-size: 1.5rem;
+  }
+  
+  .admin-badge,
+  .signout-button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+}

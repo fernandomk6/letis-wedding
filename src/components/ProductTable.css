@@ -1,0 +1,326 @@
+/* Product table styles */
+.products-table-container {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(36, 70, 103, 0.1);
+  overflow: hidden;
+}
+
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.products-table th {
+  background: linear-gradient(135deg, #88ccdd 0%, #62809a 100%);
+  color: white;
+  padding: 20px 15px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.products-table td {
+  padding: 20px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: top;
+}
+
+.products-table tr:hover {
+  background: #f8f9fa;
+}
+
+.products-table tr.reserved {
+  background: #fff8f8;
+}
+
+.products-table tr.reserved:hover {
+  background: #fff0f0;
+}
+
+.table-product-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.table-product-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.table-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.table-product-image .placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #D8e8f2 0%, #88ccdd 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.product-details h4 {
+  color: #244667;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 5px 0;
+  line-height: 1.3;
+}
+
+.product-details p {
+  color: #62809a;
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.price {
+  color: #42678b;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.available {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.status-badge.reserved {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.donor {
+  color: #244667;
+  font-weight: 500;
+}
+
+.reserved-date {
+  color: #62809a;
+  font-size: 0.85rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-buttons button {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.action-buttons button svg {
+  transition: all 0.3s ease;
+}
+
+.edit-button {
+  color: #2196f3;
+}
+
+.edit-button:hover {
+  background: #e3f2fd;
+  color: #1976d2;
+  transform: translateY(-1px);
+}
+
+.edit-button:hover svg {
+  transform: scale(1.1);
+}
+
+.delete-button {
+  color: #f44336;
+}
+
+.delete-button:hover {
+  background: #ffebee;
+  color: #d32f2f;
+  transform: translateY(-1px);
+}
+
+.delete-button:hover svg {
+  transform: scale(1.1);
+}
+
+.transfer-button {
+  color: #ff9800;
+}
+
+.transfer-button:hover {
+  background: #fff3e0;
+  color: #f57c00;
+  transform: translateY(-1px);
+}
+
+.transfer-button:hover svg {
+  transform: scale(1.1);
+}
+
+.unreserve-button {
+  color: #f44336;
+}
+
+.unreserve-button:hover {
+  background: #ffebee;
+  color: #d32f2f;
+  transform: translateY(-1px);
+}
+
+.unreserve-button:hover svg {
+  transform: scale(1.1);
+}
+
+.no-actions {
+  color: #91aabf;
+  font-size: 0.9rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #62809a;
+  font-size: 1.1rem;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(36, 70, 103, 0.1);
+}
+
+/* Transfer modal */
+.transfer-form {
+  padding: 20px;
+}
+
+.transfer-form .form-group {
+  margin-bottom: 20px;
+}
+
+.transfer-form .form-group label {
+  display: block;
+  color: #244667;
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.transfer-form .form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #D8e8f2;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.transfer-form .form-group input:focus {
+  outline: none;
+  border-color: #88ccdd;
+  box-shadow: 0 0 0 3px rgba(136, 204, 221, 0.1);
+}
+
+.transfer-form .form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.transfer-form .form-actions button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.transfer-form .form-actions button[type="button"] {
+  background: #f5f5f5;
+  color: #62809a;
+}
+
+.transfer-form .form-actions button[type="submit"] {
+  background: linear-gradient(135deg, #88ccdd 0%, #62809a 100%);
+  color: white;
+}
+
+.transfer-form .form-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .products-table-container {
+    overflow-x: auto;
+  }
+  
+  .products-table {
+    min-width: 800px;
+  }
+}
+
+@media (max-width: 768px) {
+  .products-table th,
+  .products-table td {
+    padding: 15px 10px;
+  }
+  
+  .table-product-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .table-product-image {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .action-buttons button {
+    min-width: 32px;
+    height: 32px;
+  }
+  
+  .action-buttons button svg {
+    width: 16px;
+    height: 16px;
+  }
+}

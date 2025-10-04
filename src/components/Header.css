@@ -1,0 +1,132 @@
+// Header styles
+.header {
+  background: white;
+  box-shadow: 0 2px 20px rgba(36, 70, 103, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo h1 {
+  color: #244667;
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.logo p {
+  color: #62809a;
+  font-size: 0.9rem;
+  margin: 5px 0 0 0;
+  font-weight: 400;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.login-button {
+  background: linear-gradient(135deg, #88ccdd 0%, #62809a 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(136, 204, 221, 0.3);
+}
+
+.admin-button {
+  background: linear-gradient(135deg, #88ccdd 0%, #62809a 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(136, 204, 221, 0.3);
+}
+
+.admin-indicator {
+  background: linear-gradient(135deg, #88ccdd 0%, #62809a 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.admin-indicator span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-content {
+    padding: 15px;
+  }
+  
+  .logo h1 {
+    font-size: 1.6rem;
+  }
+  
+  .header-actions {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .admin-button,
+  .admin-indicator {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+  
+  .login-button {
+    font-size: 0.8rem;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .logo h1 {
+    font-size: 1.5rem;
+  }
+  
+  .admin-button,
+  .admin-indicator,
+  .login-button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+}
