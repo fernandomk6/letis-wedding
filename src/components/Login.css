@@ -1,4 +1,3 @@
-// Login component styles
 /* Prevent body scroll when login modal is open */
 body.login-modal-open {
   overflow: hidden;
