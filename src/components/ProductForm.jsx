@@ -48,6 +48,50 @@ const ProductForm = ({ product, onSubmit, onClose }) => {
     }));
   };
 
+  const handlePaste = async (e) => {
+    e.preventDefault();
+    
+    try {
+      // Verificar se há dados de imagem na área de transferência
+      const items = e.clipboardData?.items;
+      if (!items) return;
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        
+        // Verificar se é uma imagem
+        if (item.type.indexOf('image') !== -1) {
+          const file = item.getAsFile();
+          
+          if (file) {
+            // Converter arquivo para base64
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const base64String = event.target.result;
+              setFormData(prev => ({
+                ...prev,
+                imageUrl: base64String
+              }));
+            };
+            reader.readAsDataURL(file);
+            return;
+          }
+        }
+      }
+      
+      // Se não for imagem, tentar colar como texto (URL)
+      const text = e.clipboardData?.getData('text');
+      if (text && text.startsWith('http')) {
+        setFormData(prev => ({
+          ...prev,
+          imageUrl: text
+        }));
+      }
+    } catch (error) {
+      console.error('Erro ao processar imagem colada:', error);
+    }
+  };
+
   return (
     <div 
       className="product-form-modal-overlay" 
@@ -126,9 +170,30 @@ const ProductForm = ({ product, onSubmit, onClose }) => {
               name="imageUrl"
               value={formData.imageUrl}
               onChange={handleChange}
-              placeholder="https://exemplo.com/imagem.jpg"
+              onPaste={handlePaste}
+              placeholder="Cole uma imagem aqui"
               disabled={loading}
             />
+            {formData.imageUrl && (
+              <div className="image-preview">
+                <img 
+                  src={formData.imageUrl} 
+                  alt="Preview" 
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'block';
+                  }}
+                />
+                <div className="image-error" style={{display: 'none'}}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="15" y1="9" x2="9" y2="15"/>
+                    <line x1="9" y1="9" x2="15" y2="15"/>
+                  </svg>
+                  <span>Erro ao carregar imagem</span>
+                </div>
+              </div>
+            )}
           </div>
 
           {error && <div className="error-message">{error}</div>}
