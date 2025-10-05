@@ -80,6 +80,44 @@ body.login-modal-open {
   box-shadow: 0 0 0 3px rgba(136, 204, 221, 0.1);
 }
 
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-container input {
+  padding-right: 50px; /* Espaço para o botão */
+}
+
+.password-toggle-button {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #62809a;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle-button:hover {
+  color: #88ccdd;
+  background: rgba(136, 204, 221, 0.1);
+}
+
+.password-toggle-button:focus {
+  outline: none;
+  color: #88ccdd;
+  background: rgba(136, 204, 221, 0.1);
+}
+
 .error-message {
   background: #ffebee;
   color: #c62828;
@@ -155,6 +193,19 @@ body.login-modal-open {
   .form-group input {
     padding: 10px 14px;
     font-size: 0.9rem;
+  }
+  
+  .password-input-container input {
+    padding-right: 45px; /* Ajuste para mobile */
+  }
+  
+  .password-toggle-button {
+    right: 10px;
+  }
+  
+  .password-toggle-button svg {
+    width: 18px;
+    height: 18px;
   }
   
   .login-button {
