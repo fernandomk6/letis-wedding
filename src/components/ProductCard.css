@@ -13,7 +13,6 @@
 
 .product-card.reserved {
   opacity: 0.85;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   border: 1px solid #D8e8f2;
 }
 
@@ -95,6 +94,7 @@
   letter-spacing: 0.5px;
   box-shadow: 0 2px 8px rgba(136, 204, 221, 0.3);
   max-width: 200px;
+  margin-top: 10px;
 }
 
 .reserved-info {

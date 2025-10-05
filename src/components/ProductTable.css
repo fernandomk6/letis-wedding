@@ -89,7 +89,7 @@
 .status-badge {
   padding: 10px 18px;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -276,7 +276,172 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive */
+/* Mobile Card View Styles */
+.products-cards-container {
+  display: none;
+}
+
+.product-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(36, 70, 103, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(36, 70, 103, 0.15);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.card-product-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.card-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-product-image .placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #D8e8f2 0%, #88ccdd 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}
+
+.card-product-info h4 {
+  color: #244667;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.card-product-info p {
+  color: #62809a;
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.card-body {
+  padding: 15px 20px;
+  width: 100%;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.card-row:last-child {
+  margin-bottom: 0;
+}
+
+.card-label {
+  color: #244667;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.card-value {
+  color: #62809a;
+  font-size: 1.2rem;
+}
+
+.card-actions {
+  padding: 15px 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.card-actions button {
+  flex: 1;
+  min-width: 120px;
+  background: white;
+  border: 2px solid #D8e8f2;
+  border-radius: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.card-actions button svg {
+  transition: all 0.3s ease;
+}
+
+.card-actions .edit-button {
+  color: #2196f3;
+  border-color: #2196f3;
+}
+
+.card-actions .edit-button:hover {
+  background: #e3f2fd;
+  color: #1976d2;
+  transform: translateY(-1px);
+}
+
+.card-actions .delete-button {
+  color: #f44336;
+  border-color: #f44336;
+}
+
+.card-actions .delete-button:hover {
+  background: #ffebee;
+  color: #d32f2f;
+  transform: translateY(-1px);
+}
+
+.card-actions .transfer-button {
+  color: #ff9800;
+  border-color: #ff9800;
+}
+
+.card-actions .transfer-button:hover {
+  background: #fff3e0;
+  color: #f57c00;
+  transform: translateY(-1px);
+}
+
+.card-actions .unreserve-button {
+  color: #f44336;
+  border-color: #f44336;
+}
+
+.card-actions .unreserve-button:hover {
+  background: #ffebee;
+  color: #d32f2f;
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
 @media (max-width: 1024px) {
   .products-table-container {
     overflow-x: auto;
@@ -288,68 +453,90 @@
 }
 
 @media (max-width: 480px) {
-  .products-table th,
-  .products-table td {
-    padding: 12px 8px;
+  /* Hide desktop table view */
+  .desktop-view {
+    display: none !important;
   }
   
-  .products-table th {
-    font-size: 0.8rem;
+  /* Show mobile card view */
+  .mobile-view {
+    display: block !important;
   }
   
-  .table-product-info {
+  .products-cards-container {
+    display: block;
+  }
+  
+  .card-header {
+    padding: 15px;
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 12px;
   }
   
-  .table-product-image {
-    width: 45px;
-    height: 45px;
+  .card-product-image {
+    width: 100px;
+    height: 100px;
+    align-self: center;
   }
   
-  .table-product-image .placeholder {
+  .card-product-image .placeholder {
+    font-size: 1.5rem;
+  }
+  
+  .card-product-info {
+    text-align: center;
+    width: 100%;
+  }
+  
+  .card-product-info h4 {
     font-size: 1.2rem;
   }
   
-  .product-details h4 {
-    font-size: 0.9rem;
+  .card-product-info p {
+    font-size: 0.8rem;
   }
   
-  .product-details p {
+  .card-body {
+    padding: 12px 15px;
+  }
+  
+  .card-row {
+    flex-direction: space-between;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .card-label {
     font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .card-value {
+    font-size: 1rem;
   }
   
   .status-badge {
-    padding: 8px 14px;
-    font-size: 0.75rem;
-  }
-  
-  .donor {
-    font-size: 0.85rem;
-  }
-  
-  .reserved-date {
+    padding: 6px 12px;
     font-size: 0.8rem;
   }
   
-  .action-buttons {
-    flex-direction: column;
-    gap: 4px;
+  .card-actions {
+    padding: 12px 15px;
+    gap: 8px;
   }
   
-  .action-buttons button {
-    min-width: 28px;
-    height: 28px;
-  }
-  
-  .action-buttons button svg {
-    width: 14px;
-    height: 14px;
-  }
-  
-  .no-actions {
+  .card-actions button {
+    min-width: 100px;
+    padding: 10px 12px;
     font-size: 0.8rem;
+    gap: 6px;
+  }
+  
+  .card-actions button svg {
+    width: 18px;
+    height: 18px;
   }
   
   .empty-state {

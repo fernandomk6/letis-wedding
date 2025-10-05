@@ -39,7 +39,7 @@
   background: linear-gradient(135deg, #88ccdd 0%, #62809a 100%);
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 15px 25px;
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 500;
@@ -113,7 +113,6 @@
 
 @media (max-width: 480px) {
   .header-content {
-    flex-direction: column;
     gap: 12px;
     text-align: center;
     padding: 12px;
@@ -124,13 +123,17 @@
   }
   
   .logo p {
-    font-size: 0.8rem;
+    display: none;
   }
   
   .admin-button,
-  .admin-indicator,
-  .login-button {
+  .admin-indicator {
     font-size: 0.75rem;
     padding: 8px 16px;
+  }
+
+  .login-button {
+    font-size: 0.75rem;
+    padding: 12px 18px;
   }
 }

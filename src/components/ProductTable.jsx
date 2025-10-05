@@ -45,7 +45,8 @@ const ProductTable = ({
 
   return (
     <>
-      <div className="products-table-container">
+      {/* Desktop Table View */}
+      <div className="products-table-container desktop-view">
         <table className="products-table">
           <thead>
             <tr>
@@ -141,6 +142,108 @@ const ProductTable = ({
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile Card View */}
+      <div className="products-cards-container mobile-view">
+        {products.map((product) => (
+          <div key={product.id} className={`product-card ${product.reservedBy ? 'reserved' : 'available'}`}>
+            <div className="card-header">
+              <div className="card-product-image">
+                {product.imageUrl ? (
+                  <img src={product.imageUrl} alt={product.title} />
+                ) : (
+                  <div className="placeholder">🎁</div>
+                )}
+              </div>
+              <div className="card-product-info">
+                <h4>{product.title}</h4>
+                <p>{product.description}</p>
+              </div>
+            </div>
+            
+            <div className="card-body">
+              <div className="card-row">
+                <span className="card-label">Status:</span>
+                <span className={`status-badge ${product.reservedBy ? 'reserved' : 'available'}`}>
+                  {product.reservedBy ? 'Reservado' : 'Disponível'}
+                </span>
+              </div>
+              
+              {product.reservedBy && (
+                <div className="card-row">
+                  <span className="card-label">Doador:</span>
+                  <span className="card-value">{product.reservedBy}</span>
+                </div>
+              )}
+              
+              {product.reservedAt && (
+                <div className="card-row">
+                  <span className="card-label">Data Reserva:</span>
+                  <span className="card-value">{formatDate(product.reservedAt)}</span>
+                </div>
+              )}
+            </div>
+            
+            <div className="card-actions">
+              <button 
+                className="edit-button"
+                onClick={() => onEdit(product)}
+                title="Editar presente"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                  <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                <span>Editar</span>
+              </button>
+              
+              <button 
+                className="delete-button"
+                onClick={() => onDelete(product.id)}
+                title="Excluir presente"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="3,6 5,6 21,6"/>
+                  <path d="m19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"/>
+                  <line x1="10" y1="11" x2="10" y2="17"/>
+                  <line x1="14" y1="11" x2="14" y2="17"/>
+                </svg>
+                <span>Excluir</span>
+              </button>
+              
+              {product.reservedBy && (
+                <>
+                  <button 
+                    className="transfer-button"
+                    onClick={() => handleTransferClick(product)}
+                    title="Transferir reserva"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H5a2 2 0 0 0-2-2z"/>
+                      <path d="m8 21 4-7 4 7"/>
+                      <path d="M12 3v18"/>
+                    </svg>
+                    <span>Transferir</span>
+                  </button>
+                  
+                  <button 
+                    className="unreserve-button"
+                    onClick={() => onUnreserve(product.id)}
+                    title="Desvincular presente"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="15" y1="9" x2="9" y2="15"/>
+                      <line x1="9" y1="9" x2="15" y2="15"/>
+                    </svg>
+                    <span>Desvincular</span>
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
 
       {transferModal && (
