@@ -10,7 +10,7 @@
 
 .with-background {
   position: relative;
-  background-image: url('../../public/img/2095f4d1-d96c-4eff-986e-f49939afeae7.jpeg');
+  background-image: url('../assets/img/2095f4d1-d96c-4eff-986e-f49939afeae7.jpeg');
   /* background-size: cover; */
   /* background-position: center; */
   background-position: 50% 35%;
