@@ -103,9 +103,9 @@ const PublicList = () => {
       <Header />
       
       <main className="public-main">
-        <div className="welcome-section">
-          <h1>Lista de Presentes</h1>
+        <div className="welcome-section with-background">
           <p>
+            <h1>Lista de Presentes</h1>
             {coupleNames && coupleNames.brideName && coupleNames.groomName ? (
               <>Escolha um presente especial para o casal <strong>{coupleNames.brideName}</strong> e <strong>{coupleNames.groomName}</strong>!</>
             ) : (

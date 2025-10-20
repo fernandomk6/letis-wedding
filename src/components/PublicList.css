@@ -8,23 +8,59 @@
   margin: 0 auto;
 }
 
+.with-background {
+  position: relative;
+  background-image: url('../../public/img/2095f4d1-d96c-4eff-986e-f49939afeae7.jpeg');
+  /* background-size: cover; */
+  /* background-position: center; */
+  background-position: 50% 35%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  border-radius: 8px;
+  min-height: 65vh;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.with-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 0;
+}
+
+.with-background > * {
+  position: relative;
+  z-index: 1;
+}
+
 .welcome-section {
   text-align: center;
   margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: flex-end;
+  align-items: stretch;
+
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .welcome-section h1 {
-  color: #244667;
+  color: #f1f1f1;
   font-size: 2.5rem;
   margin: 0 0 10px 0;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 2px;
 }
 
 .welcome-section p {
-  color: #62809a;
+  color: #f1f1f1;
   font-size: 1.1rem;
-  margin: 0;
+  margin-bottom: 30px;
 }
 
 .public-tabs {
