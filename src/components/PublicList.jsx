@@ -4,6 +4,7 @@ import { productService, getCoupleNames } from '../firebase/services.jsx';
 import ProductCard from './ProductCard.jsx';
 import ReserveModal from './ReserveModal.jsx';
 import Header from './Header.jsx';
+import florDate from '../assets/img/flor-date.svg';
 import './PublicList.css';
 
 const PublicList = () => {
@@ -190,7 +191,7 @@ const PublicList = () => {
             </p>
           )}
           
-          <img src="/img/flor-date.svg" alt="decoração" className="welcome-divider" />
+          <img src={florDate} alt="decoração" className="welcome-divider" />
         </div>
 
         {/* Abas */}

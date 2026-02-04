@@ -559,40 +559,40 @@
     width: 200px;
     height: 200px;
     top: 80px;
-    left: 60%;
+    left: 65%;
     transform: translateX(-130%) rotate(-15deg);
   }
 
   .public-list-container::after {
     width: 200px;
     height: 200px;
-    top: 200px;
+    top: 170px;
     right: 50%;
-    transform: translateX(130%) rotate(25deg);
+    transform: translateX(130%) rotate(5deg);
   }
 
   .flower-bg-1 {
     width: 100px;
     height: 100px;
-    bottom: 280px;
-    left: 50%;
+    bottom: 350px;
+    left: 35%;
     transform: translateX(-160%) rotate(45deg);
   }
 
   .flower-bg-2 {
     width: 100px;
     height: 100px;
-    top: 400px;
-    left: 50%;
-    transform: translateX(-150%) rotate(-30deg);
+    top: 300px;
+    left: 74%;
+    transform: translateX(-150%) rotate(0deg);
   }
 
   .flower-bg-3 {
     width: 100px;
     height: 100px;
     bottom: 180px;
-    right: 50%;
-    transform: translateX(160%) rotate(60deg);
+    left: 50%;
+    transform: translateX(160%) rotate(30deg);
   }
 
   .flower-bg-4 {
@@ -600,7 +600,7 @@
     height: 100px;
     top: 580px;
     right: 50%;
-    transform: translateX(150%) rotate(-45deg);
+    transform: translateX(150%) rotate(0deg);
   }
 
   .public-main {
