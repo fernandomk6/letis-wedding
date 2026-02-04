@@ -408,7 +408,8 @@
   
   .welcome-section .public-message {
     font-size: 1rem;
-    padding: 12px 16px;
+    padding: 5px 7px;
+    margin-top: 0px;
   }
 
   .countdown-title {
@@ -588,7 +589,8 @@
   
   .welcome-section .public-message {
     font-size: 0.9rem;
-    padding: 10px 14px;
+    padding: 5px 7px;
+    margin-top: 0px;
   }
   
   .welcome-section .pix-key {
