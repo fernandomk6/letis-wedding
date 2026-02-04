@@ -28,7 +28,7 @@
 }
 
 .public-list-container::before {
-  background-image: url('/img/flor-topo.svg');
+  background-image: url('../assets/img/flor-topo.svg');
   width: 300px;
   height: 300px;
   top: 100px;
@@ -37,7 +37,7 @@
 }
 
 .public-list-container::after {
-  background-image: url('/img/flor-topo-2.svg');
+  background-image: url('../assets/img/flor-topo-2.svg');
   width: 350px;
   height: 350px;
   top: 250px;
@@ -55,7 +55,7 @@
 }
 
 .flower-bg-1 {
-  background-image: url('/img/flor-topo-3.svg');
+  background-image: url('../assets/img/flor-topo-3.svg');
   width: 220px;
   height: 220px;
   bottom: 200px;
@@ -64,7 +64,7 @@
 }
 
 .flower-bg-2 {
-  background-image: url('/img/flor-date.svg');
+  background-image: url('../assets/img/flor-date.svg');
   width: 180px;
   height: 180px;
   top: 500px;
@@ -73,7 +73,7 @@
 }
 
 .flower-bg-3 {
-  background-image: url('/img/flor-title-1.svg');
+  background-image: url('../assets/img/flor-title-1.svg');
   width: 160px;
   height: 160px;
   bottom: 200px;
@@ -82,7 +82,7 @@
 }
 
 .flower-bg-4 {
-  background-image: url('/img/flor-title-2.svg');
+  background-image: url('../assets/img/flor-title-2.svg');
   width: 200px;
   height: 200px;
   top: 700px;
