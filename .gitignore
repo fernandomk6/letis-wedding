@@ -87,6 +87,9 @@ jspm_packages/
 
 # Gatsby files
 .cache/
+# Exception: allow fonts directory
+!public/fonts/
+!public/fonts/**
 public
 
 # Storybook build outputs

@@ -1,6 +1,14 @@
 @import url('https://fonts.cdnfonts.com/css/battalion-commander');
 @import url('https://fonts.cdnfonts.com/css/cormorant-infant');
 
+@font-face {
+  font-family: 'Palace Script MT';
+  src: url('/fonts/PalaceScriptMT-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 .public-list-container {
   min-height: 100vh;
   position: relative;
@@ -13,26 +21,26 @@
   position: fixed;
   background-size: contain;
   background-repeat: no-repeat;
-  opacity: 0.15;
+  opacity: 0.3;
   z-index: 0;
   pointer-events: none;
 }
 
 .public-list-container::before {
   background-image: url('/img/flor-topo.svg');
-  width: 280px;
-  height: 280px;
+  width: 300px;
+  height: 300px;
   top: 100px;
-  left: 50px;
+  left: 18%;
   transform: rotate(-15deg);
 }
 
 .public-list-container::after {
   background-image: url('/img/flor-topo-2.svg');
-  width: 250px;
-  height: 250px;
-  top: 300px;
-  right: 40px;
+  width: 350px;
+  height: 350px;
+  top: 250px;
+  right: 15%;
   transform: rotate(25deg);
 }
 
@@ -40,7 +48,7 @@
   position: fixed;
   background-size: contain;
   background-repeat: no-repeat;
-  opacity: 0.15;
+  opacity: 0.25;
   z-index: 0;
   pointer-events: none;
 }
@@ -50,7 +58,7 @@
   width: 220px;
   height: 220px;
   bottom: 200px;
-  left: 120px;
+  left: 25%;
   transform: rotate(45deg);
 }
 
@@ -59,7 +67,7 @@
   width: 180px;
   height: 180px;
   top: 500px;
-  left: 180px;
+  left: 10%;
   transform: rotate(-30deg);
 }
 
@@ -67,8 +75,8 @@
   background-image: url('/img/flor-title-1.svg');
   width: 160px;
   height: 160px;
-  bottom: 150px;
-  right: 150px;
+  bottom: 200px;
+  right: 10%;
   transform: rotate(60deg);
 }
 
@@ -340,6 +348,48 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .public-list-container::before {
+    width: 150px;
+    height: 150px;
+    top: 80px;
+    left: -20px;
+  }
+
+  .public-list-container::after {
+    width: 140px;
+    height: 140px;
+    top: 200px;
+    right: -20px;
+  }
+
+  .flower-bg-1 {
+    width: 120px;
+    height: 120px;
+    bottom: 300px;
+    left: 10px;
+  }
+
+  .flower-bg-2 {
+    width: 100px;
+    height: 100px;
+    top: 400px;
+    left: 20px;
+  }
+
+  .flower-bg-3 {
+    width: 110px;
+    height: 110px;
+    bottom: 200px;
+    right: 10px;
+  }
+
+  .flower-bg-4 {
+    width: 130px;
+    height: 130px;
+    top: 600px;
+    right: 20px;
+  }
+
   .public-main {
     padding: 20px 15px;
   }
@@ -371,7 +421,7 @@
   }
 
   .countdown-box {
-    min-width: 80px;
+    min-width: 60px;
     padding: 15px 20px;
   }
 
@@ -404,6 +454,54 @@
 }
 
 @media (max-width: 600px) {
+  .public-list-container::before {
+    width: 200px;
+    height: 200px;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-150%) rotate(-15deg);
+  }
+
+  .public-list-container::after {
+    width: 200px;
+    height: 200px;
+    top: 200px;
+    right: 45%;
+    transform: translateX(150%) rotate(25deg);
+  }
+
+  .flower-bg-1 {
+    width: 170px;
+    height: 170px;
+    bottom: 300px;
+    left: 50%;
+    transform: translateX(-200%) rotate(45deg);
+  }
+
+  .flower-bg-2 {
+    width: 100px;
+    height: 100px;
+    top: 450px;
+    left: 50%;
+    transform: translateX(-180%) rotate(-30deg);
+  }
+
+  .flower-bg-3 {
+    width: 150px;
+    height: 150px;
+    bottom: 200px;
+    right: 50%;
+    transform: translateX(200%) rotate(60deg);
+  }
+
+  .flower-bg-4 {
+    width: 150px;
+    height: 150px;
+    top: 650px;
+    right: 50%;
+    transform: translateX(180%) rotate(-45deg);
+  }
+
   .countdown-title {
     font-size: 0.9rem;
     margin-bottom: 15px;
@@ -420,6 +518,54 @@
 }
 
 @media (max-width: 480px) {
+  .public-list-container::before {
+    width: 200px;
+    height: 200px;
+    top: 80px;
+    left: 60%;
+    transform: translateX(-130%) rotate(-15deg);
+  }
+
+  .public-list-container::after {
+    width: 200px;
+    height: 200px;
+    top: 200px;
+    right: 50%;
+    transform: translateX(130%) rotate(25deg);
+  }
+
+  .flower-bg-1 {
+    width: 100px;
+    height: 100px;
+    bottom: 280px;
+    left: 50%;
+    transform: translateX(-160%) rotate(45deg);
+  }
+
+  .flower-bg-2 {
+    width: 100px;
+    height: 100px;
+    top: 400px;
+    left: 50%;
+    transform: translateX(-150%) rotate(-30deg);
+  }
+
+  .flower-bg-3 {
+    width: 100px;
+    height: 100px;
+    bottom: 180px;
+    right: 50%;
+    transform: translateX(160%) rotate(60deg);
+  }
+
+  .flower-bg-4 {
+    width: 100px;
+    height: 100px;
+    top: 580px;
+    right: 50%;
+    transform: translateX(150%) rotate(-45deg);
+  }
+
   .public-main {
     padding: 15px 10px;
   }
@@ -460,12 +606,12 @@
   }
 
   .countdown-box {
-    min-width: 70px;
+    min-width: 40px;
     padding: 12px 15px;
   }
 
   .countdown-number {
-    font-size: 2rem;
+    font-size: 1rem;
   }
 
   .countdown-label {
