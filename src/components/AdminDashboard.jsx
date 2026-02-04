@@ -173,13 +173,13 @@ const AdminDashboard = () => {
 
         <div className="admin-tabs">
           <button 
-            className={`tab-button ${activeTab === 'products' ? 'active' : ''}`}
+            className={`tab-button-admin ${activeTab === 'products' ? 'active' : ''}`}
             onClick={() => setActiveTab('products')}
           >
             📦 Gerenciar Presentes
           </button>
           <button 
-            className={`tab-button ${activeTab === 'settings' ? 'active' : ''}`}
+            className={`tab-button-admin ${activeTab === 'settings' ? 'active' : ''}`}
             onClick={() => setActiveTab('settings')}
           >
             💕 Configurações do Casal

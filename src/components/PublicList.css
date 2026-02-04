@@ -1,34 +1,90 @@
+@import url('https://fonts.cdnfonts.com/css/battalion-commander');
+@import url('https://fonts.cdnfonts.com/css/cormorant-infant');
+
 .public-list-container {
   min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.public-list-container::before,
+.public-list-container::after {
+  content: '';
+  position: fixed;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.15;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.public-list-container::before {
+  background-image: url('/img/flor-topo.svg');
+  width: 280px;
+  height: 280px;
+  top: 100px;
+  left: 50px;
+  transform: rotate(-15deg);
+}
+
+.public-list-container::after {
+  background-image: url('/img/flor-topo-2.svg');
+  width: 250px;
+  height: 250px;
+  top: 300px;
+  right: 40px;
+  transform: rotate(25deg);
+}
+
+.flower-decoration-bg {
+  position: fixed;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.15;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.flower-bg-1 {
+  background-image: url('/img/flor-topo-3.svg');
+  width: 220px;
+  height: 220px;
+  bottom: 200px;
+  left: 120px;
+  transform: rotate(45deg);
+}
+
+.flower-bg-2 {
+  background-image: url('/img/flor-date.svg');
+  width: 180px;
+  height: 180px;
+  top: 500px;
+  left: 180px;
+  transform: rotate(-30deg);
+}
+
+.flower-bg-3 {
+  background-image: url('/img/flor-title-1.svg');
+  width: 160px;
+  height: 160px;
+  bottom: 150px;
+  right: 150px;
+  transform: rotate(60deg);
+}
+
+.flower-bg-4 {
+  background-image: url('/img/flor-title-2.svg');
+  width: 200px;
+  height: 200px;
+  top: 700px;
+  right: 220px;
+  transform: rotate(-45deg);
 }
 
 .public-main {
   padding: 40px 20px;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.with-background {
-  position: relative;
-  background-image: url('../assets/img/2095f4d1-d96c-4eff-986e-f49939afeae7.jpeg');
-  background-position: 50% 35%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  border-radius: 8px;
-  min-height: 60vh;
-  background-color: #000;
-  overflow: hidden;
-}
-
-.with-background::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 0;
-}
-
-.with-background > * {
   position: relative;
   z-index: 1;
 }
@@ -42,23 +98,147 @@
   justify-content: flex-end;
   align-items: stretch;
 
-  max-width: 700px;
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .welcome-section h1 {
-  color: #f1f1f1;
-  font-size: 2.5rem;
-  margin: 0 0 10px 0;
+  color: #244667;
+  font-size: 1rem;
+  margin: 0 0 20px 0;
   font-weight: 400;
   letter-spacing: 2px;
 }
 
 .welcome-section p {
-  color: #f1f1f1;
+  color: #244667;
+  line-height: 1.6;
+}
+
+.welcome-section .couple-names {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.welcome-section .couple-names strong {
+  font-family: 'Palace Script MT', cursive;
+  font-size: 12rem;
+  font-weight: 400;
+  display: inline-block;
+  line-height: 1;
+}
+
+.welcome-section .wedding-date {
   font-size: 1.1rem;
-  margin-bottom: 30px;
+  color: #62809a;
+  margin: 0;
+  position: relative;
+  top: -10px;
+}
+
+.welcome-section .wedding-date strong {
+  color: #244667;
+  font-weight: 600;
+}
+
+.welcome-section .public-message {
+  font-size: 1.1rem;
+  color: #244667;
+  font-style: italic;
+  margin: 40px 0 0px 0;
+}
+
+.welcome-divider {
+  width: 140px;
+  height: 140px;
+  margin: 0px auto 0px auto;
+  opacity: 0.15;
+}
+
+.welcome-section .pix-key {
+  font-size: 1rem;
+  color: #62809a;
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: rgba(216, 232, 242, 0.5);
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.welcome-section .pix-key strong {
+  color: #244667;
+  font-weight: 600;
+}
+
+.countdown-section {
+  margin: 30px 0;
+}
+
+.countdown-title {
+  font-size: 1rem;
+  color: #244667;
+  margin-bottom: 20px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 2;
+}
+
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.countdown-box {
+  background: #244667;
+  border-radius: 4px;
+  padding: 15px 20px;
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  perspective: 1000px;
+}
+
+.countdown-box::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: white;
+  transform: translateY(-50%);
+}
+
+.countdown-number {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 2rem;
+  color: white;
+  font-weight: 500;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+  background: #244667;
+  padding: 0 10px;
+}
+
+.countdown-label {
+  font-size: 0.7rem;
+  color: #244667;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .public-tabs {
@@ -88,19 +268,9 @@
 }
 
 .tab-button.active {
-  background: rgba(255, 255, 255, 0.2);
-  color: #244667;
-  font-weight: 600;
-}
-
-.tab-button.active::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 2px;
   background: #244667;
+  color: white;
+  font-weight: 600;
 }
 
 .loading-container,
@@ -178,6 +348,41 @@
     font-size: 2rem;
   }
   
+  .welcome-section .couple-names {
+    font-size: 1.1rem;
+  }
+
+  .welcome-section .couple-names strong {
+    font-size: 8rem;
+  }
+  
+  .welcome-section .public-message {
+    font-size: 1rem;
+    padding: 12px 16px;
+  }
+
+  .countdown-title {
+    font-size: 0.7rem;
+    margin-bottom: 15px;
+  }
+
+  .countdown-container {
+    gap: 15px;
+  }
+
+  .countdown-box {
+    min-width: 80px;
+    padding: 15px 20px;
+  }
+
+  .countdown-number {
+    font-size: 1.5rem;
+  }
+
+  .countdown-label {
+    font-size: 0.6rem;
+  }
+  
   .public-tabs {
     flex-direction: column;
     gap: 5px;
@@ -198,6 +403,22 @@
   }
 }
 
+@media (max-width: 600px) {
+  .countdown-title {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .countdown-label {
+    font-size: 0.65rem;
+  }
+
+  .welcome-divider {
+    display: none;
+    margin: 0;
+  }
+}
+
 @media (max-width: 480px) {
   .public-main {
     padding: 15px 10px;
@@ -207,8 +428,48 @@
     font-size: 1.6rem;
   }
   
-  .welcome-section p {
+  .welcome-section .couple-names {
+    font-size: 1rem;
+  }
+
+  .welcome-section .couple-names strong {
+    font-size: 5rem;
+  }
+  
+  .welcome-section .wedding-date {
+    font-size: 0.95rem;
+  }
+  
+  .welcome-section .public-message {
     font-size: 0.9rem;
+    padding: 10px 14px;
+  }
+  
+  .welcome-section .pix-key {
+    font-size: 0.85rem;
+    padding: 10px 16px;
+  }
+
+  .countdown-title {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+  }
+
+  .countdown-container {
+    gap: 10px;
+  }
+
+  .countdown-box {
+    min-width: 70px;
+    padding: 12px 15px;
+  }
+
+  .countdown-number {
+    font-size: 2rem;
+  }
+
+  .countdown-label {
+    font-size: 0.65rem;
   }
   
   .public-tabs {

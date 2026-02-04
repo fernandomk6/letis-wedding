@@ -285,7 +285,7 @@ export const reservationService = {
 };
 
 /* Couple Settings operations */
-export const updateCoupleNames = async (brideName, groomName, pixKey) => {
+export const updateCoupleNames = async (brideName, groomName, pixKey, weddingDate, publicMessage) => {
   const settingsRef = doc(db, COUPLE_SETTINGS_COLLECTION, 'names');
   
   try {
@@ -293,6 +293,8 @@ export const updateCoupleNames = async (brideName, groomName, pixKey) => {
       brideName: brideName.trim(),
       groomName: groomName.trim(),
       pixKey: pixKey.trim(),
+      weddingDate: weddingDate,
+      publicMessage: publicMessage.trim(),
       updatedAt: serverTimestamp()
     });
   } catch (error) {
@@ -302,6 +304,8 @@ export const updateCoupleNames = async (brideName, groomName, pixKey) => {
         brideName: brideName.trim(),
         groomName: groomName.trim(),
         pixKey: pixKey.trim(),
+        weddingDate: weddingDate,
+        publicMessage: publicMessage.trim(),
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       });

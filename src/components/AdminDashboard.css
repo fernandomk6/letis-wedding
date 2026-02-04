@@ -23,7 +23,7 @@
   border-bottom: 2px solid #D8e8f2;
 }
 
-.tab-button {
+.tab-button-admin {
   background: transparent;
   border: none;
   padding: 12px 24px;
@@ -36,18 +36,18 @@
   position: relative;
 }
 
-.tab-button:hover {
+.tab-button-admin:hover {
   background: rgba(136, 204, 221, 0.1);
   color: #244667;
 }
 
-.tab-button.active {
+.tab-button-admin.active {
   background: linear-gradient(135deg, #88ccdd 0%, #62809a 100%);
   color: white;
   box-shadow: 0 2px 8px rgba(136, 204, 221, 0.3);
 }
 
-.tab-button.active::after {
+.tab-button-admin.active::after {
   content: '';
   position: absolute;
   bottom: -2px;
@@ -275,7 +275,7 @@
     font-size: 1.4rem;
   }
   
-  .tab-button {
+  .tab-button-admin {
     padding: 10px 16px;
     font-size: 0.85rem;
   }

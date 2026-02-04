@@ -6,7 +6,9 @@ const CoupleSettings = () => {
   const [formData, setFormData] = useState({
     brideName: '',
     groomName: '',
-    pixKey: ''
+    pixKey: '',
+    weddingDate: '',
+    publicMessage: ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -22,7 +24,9 @@ const CoupleSettings = () => {
         setFormData({
           brideName: names.brideName || '',
           groomName: names.groomName || '',
-          pixKey: names.pixKey || ''
+          pixKey: names.pixKey || '',
+          weddingDate: names.weddingDate || '',
+          publicMessage: names.publicMessage || ''
         });
       }
     } catch (error) {
@@ -44,7 +48,13 @@ const CoupleSettings = () => {
     setMessage('');
 
     try {
-      await updateCoupleNames(formData.brideName, formData.groomName, formData.pixKey);
+      await updateCoupleNames(
+        formData.brideName, 
+        formData.groomName, 
+        formData.pixKey,
+        formData.weddingDate,
+        formData.publicMessage
+      );
       setMessage('Configurações do casal atualizadas com sucesso!');
       setTimeout(() => setMessage(''), 3000);
     } catch (error) {
@@ -101,6 +111,31 @@ const CoupleSettings = () => {
           />
         </div>
 
+        <div className="form-group">
+          <label htmlFor="weddingDate">Data do Casamento</label>
+          <input
+            type="date"
+            id="weddingDate"
+            name="weddingDate"
+            value={formData.weddingDate}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="publicMessage">Mensagem Pública</label>
+          <textarea
+            id="publicMessage"
+            name="publicMessage"
+            value={formData.publicMessage}
+            onChange={handleChange}
+            placeholder="Digite uma mensagem para exibir aos convidados na lista de presentes"
+            rows="4"
+            required
+          />
+        </div>
+
         <button 
           type="submit" 
           className="save-button"
@@ -122,6 +157,16 @@ const CoupleSettings = () => {
           {formData.brideName && formData.groomName ? (
             <div>
               <p>Escolha um presente especial para o casal <strong>{formData.brideName}</strong> e <strong>{formData.groomName}</strong>!</p>
+              {formData.weddingDate && (
+                <p className="date-preview">
+                  📅 Data do casamento: <strong>{new Date(formData.weddingDate).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}</strong>
+                </p>
+              )}
+              {formData.publicMessage && (
+                <p className="message-preview">
+                  💬 {formData.publicMessage}
+                </p>
+              )}
               {formData.pixKey && (
                 <p className="pix-preview">
                   Chave PIX para contribuição: <strong>{formData.pixKey}</strong>
