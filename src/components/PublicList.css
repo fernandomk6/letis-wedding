@@ -1,13 +1,14 @@
-@import url('https://fonts.cdnfonts.com/css/battalion-commander');
-@import url('https://fonts.cdnfonts.com/css/cormorant-infant');
+/* @import url('https://fonts.cdnfonts.com/css/battalion-commander'); */
+/* @import url('https://fonts.cdnfonts.com/css/cormorant-infant'); */
+@import url('https://fonts.googleapis.com/css2?family=Luxurious+Script&display=swap');
 
-@font-face {
+/* @font-face {
   font-family: 'Palace Script MT';
   src: url('/fonts/PalaceScriptMT-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
-}
+} */
 
 .public-list-container {
   min-height: 100vh;
@@ -130,7 +131,7 @@
 }
 
 .welcome-section .couple-names strong {
-  font-family: 'Palace Script MT', cursive;
+  font-family: 'Luxurious Script', cursive;
   font-size: 12rem;
   font-weight: 400;
   display: inline-block;
