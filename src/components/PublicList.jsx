@@ -14,7 +14,6 @@ const PublicList = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showReserveModal, setShowReserveModal] = useState(false);
   const [coupleNames, setCoupleNames] = useState(null);
-  const [activeTab, setActiveTab] = useState('pending'); // 'pending' ou 'reserved'
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
@@ -88,18 +87,11 @@ const PublicList = () => {
     loadProducts(); // Reload to show updated reservation
   };
 
-  // Filtrar produtos baseado na aba ativa
-  const filteredProducts = products.filter(product => {
-    if (activeTab === 'pending') {
-      return product.reservedBy === null;
-    } else {
-      return product.reservedBy !== null;
-    }
-  });
+  // Mostrar apenas produtos pendentes (não reservados)
+  const filteredProducts = products.filter(product => product.reservedBy === null);
 
-  // Contar produtos por categoria
-  const pendingCount = products.filter(p => p.reservedBy === null).length;
-  const reservedCount = products.filter(p => p.reservedBy !== null).length;
+  // Contar produtos pendentes
+  const pendingCount = filteredProducts.length;
 
   if (loading) {
     return (
@@ -194,30 +186,11 @@ const PublicList = () => {
           <img src={florDate} alt="decoração" className="welcome-divider" />
         </div>
 
-        {/* Abas */}
-        <div className="public-tabs">
-          <button 
-            className={`tab-button ${activeTab === 'pending' ? 'active' : ''}`}
-            onClick={() => setActiveTab('pending')}
-          >
-            📋 Pendentes ({pendingCount})
-          </button>
-          <button 
-            className={`tab-button ${activeTab === 'reserved' ? 'active' : ''}`}
-            onClick={() => setActiveTab('reserved')}
-          >
-            ✅ Reservados ({reservedCount})
-          </button>
-        </div>
-
         <div className="products-grid">
           {filteredProducts.length === 0 ? (
             <div className="empty-state">
               <p>
-                {activeTab === 'pending' 
-                  ? 'Nenhum presente pendente no momento.' 
-                  : 'Nenhum presente reservado ainda.'
-                }
+                Nenhum presente pendente no momento.
               </p>
             </div>
           ) : (
