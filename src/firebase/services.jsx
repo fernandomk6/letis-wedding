@@ -285,7 +285,7 @@ export const reservationService = {
 };
 
 /* Couple Settings operations */
-export const updateCoupleNames = async (brideName, groomName, pixKey, weddingDate, publicMessage) => {
+export const updateCoupleNames = async (brideName, groomName, pixKey, weddingDate, publicMessage, paletteId = 'azul-classico') => {
   const settingsRef = doc(db, COUPLE_SETTINGS_COLLECTION, 'names');
   
   try {
@@ -295,6 +295,7 @@ export const updateCoupleNames = async (brideName, groomName, pixKey, weddingDat
       pixKey: pixKey.trim(),
       weddingDate: weddingDate,
       publicMessage: publicMessage.trim(),
+      paletteId: paletteId,
       updatedAt: serverTimestamp()
     });
   } catch (error) {
@@ -306,6 +307,7 @@ export const updateCoupleNames = async (brideName, groomName, pixKey, weddingDat
         pixKey: pixKey.trim(),
         weddingDate: weddingDate,
         publicMessage: publicMessage.trim(),
+      paletteId: paletteId,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       });

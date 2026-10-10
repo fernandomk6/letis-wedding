@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(36, 70, 103, 0.8);
+  background: rgba(var(--pl-primary-rgb), 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,7 +20,7 @@
   max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 20px 40px rgba(36, 70, 103, 0.2);
+  box-shadow: 0 20px 40px rgba(var(--pl-primary-rgb), 0.2);
 }
 
 .modal-header {
@@ -28,11 +28,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 25px 30px;
-  border-bottom: 1px solid #D8e8f2;
+  border-bottom: 1px solid var(--pl-light);
 }
 
 .modal-header h2 {
-  color: #244667;
+  color: var(--pl-primary);
   font-size: 1.5rem;
   font-weight: 500;
   margin: 0;
@@ -42,7 +42,7 @@
   background: none;
   border: none;
   font-size: 2rem;
-  color: #91aabf;
+  color: var(--pl-secondary);
   cursor: pointer;
   padding: 0;
   width: 30px;
@@ -55,8 +55,8 @@
 }
 
 .close-button:hover {
-  background: #D8e8f2;
-  color: #244667;
+  background: var(--pl-light);
+  color: var(--pl-primary);
 }
 
 .modal-body {
@@ -89,7 +89,7 @@
 .product-preview .placeholder-image {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #D8e8f2 0%, #88ccdd 100%);
+  background: linear-gradient(135deg, var(--pl-light) 0%, var(--pl-accent) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -97,14 +97,14 @@
 }
 
 .product-details h3 {
-  color: #244667;
+  color: var(--pl-primary);
   font-size: 1.2rem;
   font-weight: 500;
   margin: 0 0 8px 0;
 }
 
 .product-details p {
-  color: #62809a;
+  color: var(--pl-secondary);
   font-size: 0.9rem;
   margin: 0 0 8px 0;
   line-height: 1.4;
@@ -121,7 +121,7 @@
 
 .form-group label {
   display: block;
-  color: #244667;
+  color: var(--pl-primary);
   font-weight: 500;
   margin-bottom: 8px;
   font-size: 0.9rem;
@@ -130,7 +130,7 @@
 .form-group input {
   width: 100%;
   padding: 12px 16px;
-  border: 2px solid #D8e8f2;
+  border: 2px solid var(--pl-light);
   border-radius: 10px;
   font-size: 1rem;
   transition: all 0.3s ease;
@@ -139,8 +139,8 @@
 
 .form-group input:focus {
   outline: none;
-  border-color: #88ccdd;
-  box-shadow: 0 0 0 3px rgba(136, 204, 221, 0.1);
+  border-color: var(--pl-accent);
+  box-shadow: 0 0 0 3px rgba(var(--pl-accent-rgb), 0.1);
 }
 
 .form-group input:disabled {
@@ -178,7 +178,7 @@
 
 .cancel-button {
   background: #f5f5f5;
-  color: #62809a;
+  color: var(--pl-secondary);
 }
 
 .cancel-button:hover:not(:disabled) {
@@ -186,13 +186,13 @@
 }
 
 .confirm-button {
-  background: linear-gradient(135deg, #88ccdd 0%, #62809a 100%);
+  background: linear-gradient(135deg, var(--pl-accent) 0%, var(--pl-secondary) 100%);
   color: white;
 }
 
 .confirm-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(136, 204, 221, 0.3);
+  box-shadow: 0 8px 20px rgba(var(--pl-accent-rgb), 0.3);
 }
 
 .cancel-button:disabled,

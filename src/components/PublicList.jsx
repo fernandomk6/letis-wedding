@@ -4,6 +4,7 @@ import { productService, getCoupleNames } from '../firebase/services.jsx';
 import ProductCard from './ProductCard.jsx';
 import ReserveModal from './ReserveModal.jsx';
 import Header from './Header.jsx';
+import { getPaletteStyle } from '../theme/palettes.js';
 import florDate from '../assets/img/flor-date.svg';
 import './PublicList.css';
 
@@ -93,9 +94,11 @@ const PublicList = () => {
   // Contar produtos pendentes
   const pendingCount = filteredProducts.length;
 
+  const paletteStyle = getPaletteStyle(coupleNames?.paletteId);
+
   if (loading) {
     return (
-      <div className="public-list-container">
+      <div className="public-list-container" style={paletteStyle}>
         <Header />
         <div className="loading-container">
           <div className="loading-spinner"></div>
@@ -107,7 +110,7 @@ const PublicList = () => {
 
   if (error) {
     return (
-      <div className="public-list-container">
+      <div className="public-list-container" style={paletteStyle}>
         <Header />
         <div className="error-container">
           <p>{error}</p>
@@ -120,7 +123,7 @@ const PublicList = () => {
   }
 
   return (
-    <div className="public-list-container">
+    <div className="public-list-container" style={paletteStyle}>
       <div className="flower-decoration-bg flower-bg-1"></div>
       <div className="flower-decoration-bg flower-bg-2"></div>
       <div className="flower-decoration-bg flower-bg-3"></div>
@@ -139,15 +142,14 @@ const PublicList = () => {
             <p>Escolha um presente especial para o casal!</p>
           )}
 
-          {coupleNames.weddingDate && (
-            <p className="wedding-date">
-              <strong>{new Date(coupleNames.weddingDate).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC' }).replace(/\//g, '.')}</strong>
-            </p>
-          )}
-
           {coupleNames && coupleNames.weddingDate && (
             <div className="countdown-section">
               <p className="countdown-title">Contagem regressiva para o grande dia</p>
+              {coupleNames && coupleNames.weddingDate && (
+                <p className="wedding-date">
+                  <strong>{new Date(coupleNames.weddingDate).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC' }).replace(/\//g, '.')}</strong>
+                </p>
+              )}
               <div className="countdown-container">
                 <div className="countdown-item">
                   <div className="countdown-box">

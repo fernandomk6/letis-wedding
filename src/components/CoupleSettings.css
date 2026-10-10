@@ -267,3 +267,50 @@
     margin: 8px 0 0 0;
   }
 }
+
+/* Seletor de paleta */
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.palette-option {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  background: white;
+  border: 2px solid #e3e6ea;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.palette-option:hover {
+  border-color: #aab2bd;
+}
+
+.palette-option.selected {
+  border-color: #244667;
+  box-shadow: 0 0 0 3px rgba(36, 70, 103, 0.2);
+}
+
+.palette-swatches {
+  display: flex;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.palette-swatches span {
+  flex: 1;
+}
+
+.palette-name {
+  font-size: 0.8rem;
+  color: #244667;
+  font-weight: 500;
+}

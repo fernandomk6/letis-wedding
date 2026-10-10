@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { updateCoupleNames, getCoupleNames } from '../firebase/services.jsx';
+import { PALETTES, DEFAULT_PALETTE_ID, getPaletteStyle } from '../theme/palettes.js';
 import './CoupleSettings.css';
 
 const CoupleSettings = () => {
@@ -8,7 +9,8 @@ const CoupleSettings = () => {
     groomName: '',
     pixKey: '',
     weddingDate: '',
-    publicMessage: ''
+    publicMessage: '',
+    paletteId: DEFAULT_PALETTE_ID
   });
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -26,7 +28,8 @@ const CoupleSettings = () => {
           groomName: names.groomName || '',
           pixKey: names.pixKey || '',
           weddingDate: names.weddingDate || '',
-          publicMessage: names.publicMessage || ''
+          publicMessage: names.publicMessage || '',
+          paletteId: names.paletteId || DEFAULT_PALETTE_ID
         });
       }
     } catch (error) {
@@ -53,7 +56,8 @@ const CoupleSettings = () => {
         formData.groomName, 
         formData.pixKey,
         formData.weddingDate,
-        formData.publicMessage
+        formData.publicMessage,
+        formData.paletteId
       );
       setMessage('Configurações do casal atualizadas com sucesso!');
       setTimeout(() => setMessage(''), 3000);
@@ -136,6 +140,29 @@ const CoupleSettings = () => {
           />
         </div>
 
+        <div className="form-group">
+          <label>Paleta de Cores da Lista Pública</label>
+          <div className="palette-grid" role="radiogroup" aria-label="Paleta de cores">
+            {PALETTES.map((p) => (
+              <button
+                type="button"
+                key={p.id}
+                role="radio"
+                aria-checked={formData.paletteId === p.id}
+                className={`palette-option ${formData.paletteId === p.id ? 'selected' : ''}`}
+                onClick={() => setFormData(prev => ({ ...prev, paletteId: p.id }))}
+              >
+                <span className="palette-swatches">
+                  {[p.primary, p.secondary, p.accent, p.light, p.background].map((c) => (
+                    <span key={c} style={{ background: c }} />
+                  ))}
+                </span>
+                <span className="palette-name">{p.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
         <button 
           type="submit" 
           className="save-button"
@@ -153,7 +180,7 @@ const CoupleSettings = () => {
 
       <div className="preview-section">
         <h3>Prévia da Lista Pública</h3>
-        <div className="preview-text">
+        <div className="preview-text" style={{ ...getPaletteStyle(formData.paletteId), background: 'var(--pl-bg)', color: 'var(--pl-primary)' }}>
           {formData.brideName && formData.groomName ? (
             <div>
               <p>Escolha um presente especial para o casal <strong>{formData.brideName}</strong> e <strong>{formData.groomName}</strong>!</p>
