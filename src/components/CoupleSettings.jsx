@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { updateCoupleNames, getCoupleNames } from '../firebase/services.jsx';
 import { PALETTES, DEFAULT_PALETTE_ID, getPaletteStyle } from '../theme/palettes.js';
 import './CoupleSettings.css';
 
-const CoupleSettings = () => {
+const CoupleSettings = ({ ownerUid }) => {
   const [formData, setFormData] = useState({
     brideName: '',
     groomName: '',
@@ -21,7 +21,7 @@ const CoupleSettings = () => {
 
   const loadCoupleNames = async () => {
     try {
-      const names = await getCoupleNames();
+      const names = await getCoupleNames(ownerUid);
       if (names) {
         setFormData({
           brideName: names.brideName || '',
@@ -52,6 +52,7 @@ const CoupleSettings = () => {
 
     try {
       await updateCoupleNames(
+        ownerUid,
         formData.brideName, 
         formData.groomName, 
         formData.pixKey,

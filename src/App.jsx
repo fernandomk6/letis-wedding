@@ -7,18 +7,18 @@ import AdminDashboard from './components/AdminDashboard.jsx';
 import './App.css';
 
 const AppContent = () => {
-  const { user, isAdmin } = useAuth();
+  const { user } = useAuth();
 
   return (
     <Routes>
       {/* Rota pública para a lista de presentes */}
-      <Route path="/public" element={<PublicList />} />
+      <Route path="/l/:uid" element={<PublicList />} />
       
       {/* Rota do painel administrativo */}
       <Route 
         path="/admin" 
         element={
-          user && isAdmin ? 
+          user ? 
             <AdminDashboard /> : 
             <Navigate to="/login" replace />
         } 
@@ -28,7 +28,7 @@ const AppContent = () => {
       <Route 
         path="/login" 
         element={
-          user && isAdmin ? 
+          user ? 
             <Navigate to="/admin" replace /> : 
             <Login onLoginSuccess={() => {}} />
         } 

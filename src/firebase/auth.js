@@ -1,20 +1,20 @@
 // Firebase Authentication operations
-import { 
-  signInWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged 
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
 } from 'firebase/auth';
 import { auth } from './config.js';
 
-// Admin credentials (for reference - DO NOT expose in UI)
-const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 'leticia@exemplo.com';
-const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'casei';
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 export const authService = {
-  // Sign in admin
-  async signInAdmin(email, password) {
+  // Sign in with Google
+  async signInWithGoogle() {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithPopup(auth, googleProvider);
       return userCredential.user;
     } catch (error) {
       console.error('Error signing in:', error);
@@ -40,18 +40,5 @@ export const authService = {
   // Listen to auth state changes
   onAuthStateChanged(callback) {
     return onAuthStateChanged(auth, callback);
-  },
-
-  // Check if user is admin
-  isAdmin(user) {
-    return user && user.email === ADMIN_EMAIL;
-  },
-
-  // Get admin credentials (for setup purposes only)
-  getAdminCredentials() {
-    return {
-      email: ADMIN_EMAIL,
-      password: ADMIN_PASSWORD
-    };
   }
 };

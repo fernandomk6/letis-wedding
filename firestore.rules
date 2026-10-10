@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    // Perfil privado (sem leitura pública da coleção users)
+    match /users/{uid} {
+      allow read, write: if isOwner(uid);
+
+      // Presentes: leitura pública (convidados), escrita do dono
+      match /products/{productId} {
+        allow read: if true;
+        allow create, delete: if isOwner(uid);
+        allow update: if isOwner(uid)
+          || (
+            // Reserva por convidado: só muda campos de reserva
+            resource.data.reservedBy == null
+            && request.resource.data.reservedBy is string
+            && request.resource.data.reservedBy.size() > 0
+            && request.resource.data.reservedBy.size() <= 100
+            && request.resource.data.diff(resource.data).affectedKeys()
+                 .hasOnly(['reservedBy', 'reservedAt', 'updatedAt'])
+          );
+      }
+
+      // Registro de reservas: convidados criam, só o dono lê
+      match /reservations/{reservationId} {
+        allow read, update, delete: if isOwner(uid);
+        allow create: if request.resource.data.keys().hasOnly(['productId', 'donorName', 'createdAt'])
+          && request.resource.data.donorName is string
+          && request.resource.data.donorName.size() > 0
+          && request.resource.data.donorName.size() <= 100;
+      }
+
+      // Configurações do casal: leitura pública, escrita do dono
+      match /settings/{docId} {
+        allow read: if true;
+        allow write: if isOwner(uid);
+      }
+    }
+  }
+}

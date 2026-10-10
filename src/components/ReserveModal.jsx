@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { productService } from '../firebase/services.jsx';
 import './ReserveModal.css';
 
-const ReserveModal = ({ product, onClose, onSuccess }) => {
+const ReserveModal = ({ ownerUid, product, onClose, onSuccess }) => {
   const [donorName, setDonorName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -20,7 +20,7 @@ const ReserveModal = ({ product, onClose, onSuccess }) => {
     setError('');
 
     try {
-      await productService.reserveProduct(product.id, donorName.trim());
+      await productService.reserveProduct(ownerUid, product.id, donorName.trim());
       onSuccess();
     } catch (error) {
       if (error.message.includes('já foi reservado')) {

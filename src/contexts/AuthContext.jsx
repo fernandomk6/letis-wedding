@@ -1,6 +1,7 @@
 // Authentication context and hooks
 import { createContext, useContext, useEffect, useState } from 'react';
 import { authService } from '../firebase/auth.js';
+import { userService } from '../firebase/services.jsx';
 
 const AuthContext = createContext();
 
@@ -25,30 +26,21 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  const signIn = async (email, password) => {
-    try {
-      const user = await authService.signInAdmin(email, password);
-      return user;
-    } catch (error) {
-      throw error;
-    }
+  const signInWithGoogle = async () => {
+    const user = await authService.signInWithGoogle();
+    // Garante o perfil do usuário em users/{uid}
+    await userService.ensureProfile(user);
+    return user;
   };
 
   const signOut = async () => {
-    try {
-      await authService.signOut();
-    } catch (error) {
-      throw error;
-    }
+    await authService.signOut();
   };
-
-  const isAdmin = authService.isAdmin(user);
 
   const value = {
     user,
-    signIn,
+    signInWithGoogle,
     signOut,
-    isAdmin,
     loading
   };
 

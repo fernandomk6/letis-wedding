@@ -11,22 +11,38 @@ import {
   orderBy, 
   where,
   runTransaction,
-  serverTimestamp,
-  Timestamp
+  serverTimestamp
 } from 'firebase/firestore';
 import { db } from './config.js';
 
-/* Collections */
-const PRODUCTS_COLLECTION = 'products';
-const COUPLE_SETTINGS_COLLECTION = 'coupleSettings';
-const RESERVATIONS_COLLECTION = 'reservations';
+/* Paths: todos os dados ficam sob users/{ownerUid}/... */
+const productsCol = (ownerUid) => collection(db, 'users', ownerUid, 'products');
+const productDoc = (ownerUid, productId) => doc(db, 'users', ownerUid, 'products', productId);
+const reservationsCol = (ownerUid) => collection(db, 'users', ownerUid, 'reservations');
+const namesDoc = (ownerUid) => doc(db, 'users', ownerUid, 'settings', 'names');
+
+/* User profile operations */
+export const userService = {
+  // Cria o perfil users/{uid} no primeiro login
+  async ensureProfile(user) {
+    const userRef = doc(db, 'users', user.uid);
+    const snap = await getDoc(userRef);
+    if (!snap.exists()) {
+      await setDoc(userRef, {
+        displayName: user.displayName || '',
+        email: user.email || '',
+        createdAt: serverTimestamp()
+      });
+    }
+  }
+};
 
 /* Product operations */
 export const productService = {
   // Get all products
-  async getAllProducts() {
+  async getAllProducts(ownerUid) {
     try {
-      const productsRef = collection(db, PRODUCTS_COLLECTION);
+      const productsRef = productsCol(ownerUid);
       const q = query(productsRef, orderBy('createdAt', 'desc'));
       const querySnapshot = await getDocs(q);
       
@@ -44,9 +60,9 @@ export const productService = {
   },
 
   // Get single product
-  async getProduct(productId) {
+  async getProduct(ownerUid, productId) {
     try {
-      const productRef = doc(db, PRODUCTS_COLLECTION, productId);
+      const productRef = productDoc(ownerUid, productId);
       const productSnap = await getDoc(productRef);
       
       if (productSnap.exists()) {
@@ -67,9 +83,9 @@ export const productService = {
   },
 
   // Create new product
-  async createProduct(productData) {
+  async createProduct(ownerUid, productData) {
     try {
-      const productsRef = collection(db, PRODUCTS_COLLECTION);
+      const productsRef = productsCol(ownerUid);
       const newProduct = {
         ...productData,
         reservedBy: null,
@@ -87,9 +103,9 @@ export const productService = {
   },
 
   // Update product
-  async updateProduct(productId, updateData) {
+  async updateProduct(ownerUid, productId, updateData) {
     try {
-      const productRef = doc(db, PRODUCTS_COLLECTION, productId);
+      const productRef = productDoc(ownerUid, productId);
       await updateDoc(productRef, {
         ...updateData,
         updatedAt: serverTimestamp()
@@ -101,9 +117,9 @@ export const productService = {
   },
 
   // Delete product
-  async deleteProduct(productId) {
+  async deleteProduct(ownerUid, productId) {
     try {
-      const productRef = doc(db, PRODUCTS_COLLECTION, productId);
+      const productRef = productDoc(ownerUid, productId);
       await deleteDoc(productRef);
     } catch (error) {
       console.error('Error deleting product:', error);
@@ -112,10 +128,10 @@ export const productService = {
   },
 
   // Reserve product (with transaction for consistency)
-  async reserveProduct(productId, donorName) {
+  async reserveProduct(ownerUid, productId, donorName) {
     try {
       const result = await runTransaction(db, async (transaction) => {
-        const productRef = doc(db, PRODUCTS_COLLECTION, productId);
+        const productRef = productDoc(ownerUid, productId);
         const productSnap = await transaction.get(productRef);
         
         if (!productSnap.exists()) {
@@ -137,7 +153,7 @@ export const productService = {
         });
         
         // Create reservation record
-        const reservationRef = doc(collection(db, RESERVATIONS_COLLECTION));
+        const reservationRef = doc(reservationsCol(ownerUid));
         transaction.set(reservationRef, {
           productId: productId,
           donorName: donorName,
@@ -155,10 +171,10 @@ export const productService = {
   },
 
   // Unreserve product (admin only)
-  async unreserveProduct(productId) {
+  async unreserveProduct(ownerUid, productId) {
     try {
       const result = await runTransaction(db, async (transaction) => {
-        const productRef = doc(db, PRODUCTS_COLLECTION, productId);
+        const productRef = productDoc(ownerUid, productId);
         const productSnap = await transaction.get(productRef);
         
         if (!productSnap.exists()) {
@@ -189,10 +205,10 @@ export const productService = {
   },
 
   // Transfer reservation (admin only)
-  async transferReservation(productId, newDonorName) {
+  async transferReservation(ownerUid, productId, newDonorName) {
     try {
       const result = await runTransaction(db, async (transaction) => {
-        const productRef = doc(db, PRODUCTS_COLLECTION, productId);
+        const productRef = productDoc(ownerUid, productId);
         const productSnap = await transaction.get(productRef);
         
         if (!productSnap.exists()) {
@@ -217,9 +233,9 @@ export const productService = {
   },
 
   // Search products
-  async searchProducts(searchTerm, donorFilter) {
+  async searchProducts(ownerUid, searchTerm, donorFilter) {
     try {
-      let products = await this.getAllProducts();
+      let products = await this.getAllProducts(ownerUid);
       
       // Filter by search term
       if (searchTerm) {
@@ -248,9 +264,9 @@ export const productService = {
 /* Reservation operations */
 export const reservationService = {
   // Get all reservations
-  async getAllReservations() {
+  async getAllReservations(ownerUid) {
     try {
-      const reservationsRef = collection(db, RESERVATIONS_COLLECTION);
+      const reservationsRef = reservationsCol(ownerUid);
       const q = query(reservationsRef, orderBy('createdAt', 'desc'));
       const querySnapshot = await getDocs(q);
       
@@ -266,9 +282,9 @@ export const reservationService = {
   },
 
   // Get reservations for a product
-  async getProductReservations(productId) {
+  async getProductReservations(ownerUid, productId) {
     try {
-      const reservationsRef = collection(db, RESERVATIONS_COLLECTION);
+      const reservationsRef = reservationsCol(ownerUid);
       const q = query(reservationsRef, where('productId', '==', productId));
       const querySnapshot = await getDocs(q);
       
@@ -285,11 +301,9 @@ export const reservationService = {
 };
 
 /* Couple Settings operations */
-export const updateCoupleNames = async (brideName, groomName, pixKey, weddingDate, publicMessage, paletteId = 'azul-classico') => {
-  const settingsRef = doc(db, COUPLE_SETTINGS_COLLECTION, 'names');
-  
+export const updateCoupleNames = async (ownerUid, brideName, groomName, pixKey, weddingDate, publicMessage, paletteId = 'azul-classico') => {
   try {
-    await updateDoc(settingsRef, {
+    await setDoc(namesDoc(ownerUid), {
       brideName: brideName.trim(),
       groomName: groomName.trim(),
       pixKey: pixKey.trim(),
@@ -297,42 +311,17 @@ export const updateCoupleNames = async (brideName, groomName, pixKey, weddingDat
       publicMessage: publicMessage.trim(),
       paletteId: paletteId,
       updatedAt: serverTimestamp()
-    });
+    }, { merge: true });
   } catch (error) {
-    // If document doesn't exist, create it
-    if (error.code === 'not-found') {
-      await setDoc(settingsRef, {
-        brideName: brideName.trim(),
-        groomName: groomName.trim(),
-        pixKey: pixKey.trim(),
-        weddingDate: weddingDate,
-        publicMessage: publicMessage.trim(),
-      paletteId: paletteId,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
-      });
-    } else {
-      console.error('Error updating couple names:', error);
-      throw error;
-    }
+    console.error('Error updating couple names:', error);
+    throw error;
   }
 };
 
-export const getCoupleNames = async () => {
+export const getCoupleNames = async (ownerUid) => {
   try {
-    const settingsRef = doc(db, COUPLE_SETTINGS_COLLECTION, 'names');
-    const docSnap = await getDoc(settingsRef);
-    
-    if (docSnap.exists()) {
-      return docSnap.data();
-    } else {
-      // Try to get from collection (fallback for old format)
-      const querySnapshot = await getDocs(collection(db, COUPLE_SETTINGS_COLLECTION));
-      if (!querySnapshot.empty) {
-        return querySnapshot.docs[0].data();
-      }
-      return null;
-    }
+    const docSnap = await getDoc(namesDoc(ownerUid));
+    return docSnap.exists() ? docSnap.data() : null;
   } catch (error) {
     // Silenciosamente falha - os nomes do casal são opcionais
     return null;

@@ -9,7 +9,8 @@ import CoupleSettings from './CoupleSettings.jsx';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
+  const ownerUid = user.uid;
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -26,7 +27,7 @@ const AdminDashboard = () => {
   const loadProducts = async () => {
     try {
       setLoading(true);
-      const productsData = await productService.getAllProducts();
+      const productsData = await productService.getAllProducts(ownerUid);
       setProducts(productsData);
     } catch (error) {
       setError('Erro ao carregar presentes.');
@@ -38,7 +39,7 @@ const AdminDashboard = () => {
 
   const handleCreateProduct = async (productData) => {
     try {
-      await productService.createProduct(productData);
+      await productService.createProduct(ownerUid, productData);
       setShowForm(false);
       loadProducts();
     } catch (error) {
@@ -49,7 +50,7 @@ const AdminDashboard = () => {
 
   const handleUpdateProduct = async (productId, updateData) => {
     try {
-      await productService.updateProduct(productId, updateData);
+      await productService.updateProduct(ownerUid, productId, updateData);
       setEditingProduct(null);
       loadProducts();
     } catch (error) {
@@ -61,7 +62,7 @@ const AdminDashboard = () => {
   const handleDeleteProduct = async (productId) => {
     if (window.confirm('Tem certeza que deseja excluir este presente?')) {
       try {
-        await productService.deleteProduct(productId);
+        await productService.deleteProduct(ownerUid, productId);
         loadProducts();
       } catch (error) {
         setError('Erro ao excluir presente.');
@@ -73,7 +74,7 @@ const AdminDashboard = () => {
   const handleUnreserveProduct = async (productId) => {
     if (window.confirm('Tem certeza que deseja desvincular este presente?')) {
       try {
-        await productService.unreserveProduct(productId);
+        await productService.unreserveProduct(ownerUid, productId);
         loadProducts();
       } catch (error) {
         setError('Erro ao desvincular presente.');
@@ -84,7 +85,7 @@ const AdminDashboard = () => {
 
   const handleTransferReservation = async (productId, newDonorName) => {
     try {
-      await productService.transferReservation(productId, newDonorName);
+      await productService.transferReservation(ownerUid, productId, newDonorName);
       loadProducts();
     } catch (error) {
       setError('Erro ao transferir reserva.');
@@ -106,7 +107,7 @@ const AdminDashboard = () => {
   const handleCopyPublicLink = async () => {
     try {
       // Criar URL da lista pública
-      const publicUrl = `${window.location.origin}/public`;
+      const publicUrl = `${window.location.origin}/l/${ownerUid}`;
       
       await navigator.clipboard.writeText(publicUrl);
       
@@ -127,7 +128,7 @@ const AdminDashboard = () => {
   };
 
   const handleViewPublicList = () => {
-    window.open('/public', '_blank');
+    window.open(`/l/${ownerUid}`, '_blank');
   };
 
   if (loading) {
@@ -249,7 +250,7 @@ const AdminDashboard = () => {
         )}
 
         {activeTab === 'settings' && (
-          <CoupleSettings />
+          <CoupleSettings ownerUid={ownerUid} />
         )}
       </main>
 

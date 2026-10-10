@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import './Header.css';
 
-const Header = () => {
-  const { isAdmin } = useAuth();
+const Header = ({ ownerUid }) => {
+  const { user } = useAuth();
+  const isOwner = !!user && user.uid === ownerUid;
   const navigate = useNavigate();
 
   const handleAdminClick = () => {
@@ -20,7 +21,7 @@ const Header = () => {
         </div>
         
         <div className="header-actions">
-          {isAdmin && (
+          {isOwner && (
             <button 
               className="admin-button"
               onClick={handleAdminClick}

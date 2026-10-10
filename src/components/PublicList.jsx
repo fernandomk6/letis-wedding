@@ -1,5 +1,6 @@
 // Public product list component
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { productService, getCoupleNames } from '../firebase/services.jsx';
 import ProductCard from './ProductCard.jsx';
 import ReserveModal from './ReserveModal.jsx';
@@ -9,6 +10,7 @@ import florDate from '../assets/img/flor-date.svg';
 import './PublicList.css';
 
 const PublicList = () => {
+  const { uid: ownerUid } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -20,7 +22,7 @@ const PublicList = () => {
   useEffect(() => {
     loadProducts();
     loadCoupleNames();
-  }, []);
+  }, [ownerUid]);
 
   // Countdown timer effect
   useEffect(() => {
@@ -52,7 +54,7 @@ const PublicList = () => {
   const loadProducts = async () => {
     try {
       setLoading(true);
-      const productsData = await productService.getAllProducts();
+      const productsData = await productService.getAllProducts(ownerUid);
       setProducts(productsData);
     } catch (error) {
       setError('Erro ao carregar produtos. Tente novamente.');
@@ -64,7 +66,7 @@ const PublicList = () => {
 
   const loadCoupleNames = async () => {
     try {
-      const names = await getCoupleNames();
+      const names = await getCoupleNames(ownerUid);
       setCoupleNames(names);
     } catch (error) {
       // Silenciosamente falha - os nomes do casal são opcionais
@@ -91,15 +93,12 @@ const PublicList = () => {
   // Mostrar apenas produtos pendentes (não reservados)
   const filteredProducts = products.filter(product => product.reservedBy === null);
 
-  // Contar produtos pendentes
-  const pendingCount = filteredProducts.length;
-
   const paletteStyle = getPaletteStyle(coupleNames?.paletteId);
 
   if (loading) {
     return (
       <div className="public-list-container" style={paletteStyle}>
-        <Header />
+        <Header ownerUid={ownerUid} />
         <div className="loading-container">
           <div className="loading-spinner"></div>
           <p>Carregando lista de presentes...</p>
@@ -111,7 +110,7 @@ const PublicList = () => {
   if (error) {
     return (
       <div className="public-list-container" style={paletteStyle}>
-        <Header />
+        <Header ownerUid={ownerUid} />
         <div className="error-container">
           <p>{error}</p>
           <button onClick={loadProducts} className="retry-button">
@@ -129,7 +128,7 @@ const PublicList = () => {
       <div className="flower-decoration-bg flower-bg-3"></div>
       <div className="flower-decoration-bg flower-bg-4"></div>
       
-      <Header />
+      <Header ownerUid={ownerUid} />
       
       <main className="public-main">
         
@@ -209,6 +208,7 @@ const PublicList = () => {
 
       {showReserveModal && selectedProduct && (
         <ReserveModal
+          ownerUid={ownerUid}
           product={selectedProduct}
           onClose={() => setShowReserveModal(false)}
           onSuccess={handleReserveSuccess}
