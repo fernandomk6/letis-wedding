@@ -2,6 +2,9 @@
 
 Um aplicativo web responsivo para criar e gerenciar uma lista de presentes de casamento.
 
+## Dev account
+fernandomk6dev
+
 ## 🚀 Tecnologias
 
 - **React 18** com Vite
