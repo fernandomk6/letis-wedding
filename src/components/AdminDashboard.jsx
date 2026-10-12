@@ -6,7 +6,11 @@ import ProductForm from './ProductForm.jsx';
 import ProductTable from './ProductTable.jsx';
 import AdminHeader from './AdminHeader.jsx';
 import CoupleSettings from './CoupleSettings.jsx';
+import { getProductStatus, STATUS } from '../utils/status.js';
 import './AdminDashboard.css';
+
+// Ordem de exibição: disponíveis, reservados, pagos e recebidos
+const STATUS_ORDER = [STATUS.AVAILABLE, STATUS.RESERVED, STATUS.PAID, STATUS.RECEIVED];
 
 const AdminDashboard = () => {
   const { user, signOut } = useAuth();
@@ -18,15 +22,16 @@ const AdminDashboard = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [donorFilter, setDonorFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
   const [activeTab, setActiveTab] = useState('products');
 
   useEffect(() => {
     loadProducts();
   }, []);
 
-  const loadProducts = async () => {
+  const loadProducts = async (silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
       const productsData = await productService.getAllProducts(ownerUid);
       setProducts(productsData);
     } catch (error) {
@@ -59,50 +64,51 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleDeleteProduct = async (productId) => {
-    if (window.confirm('Tem certeza que deseja excluir este presente?')) {
-      try {
-        await productService.deleteProduct(ownerUid, productId);
-        loadProducts();
-      } catch (error) {
-        setError('Erro ao excluir presente.');
-        console.error('Error deleting product:', error);
-      }
-    }
-  };
-
-  const handleUnreserveProduct = async (productId) => {
-    if (window.confirm('Tem certeza que deseja desvincular este presente?')) {
-      try {
-        await productService.unreserveProduct(ownerUid, productId);
-        loadProducts();
-      } catch (error) {
-        setError('Erro ao desvincular presente.');
-        console.error('Error unreserving product:', error);
-      }
-    }
-  };
-
-  const handleTransferReservation = async (productId, newDonorName) => {
+  // As ações abaixo recarregam a lista e repassam o erro para o diálogo da tabela
+  const runAction = (action, errorMessage) => async (...args) => {
     try {
-      await productService.transferReservation(ownerUid, productId, newDonorName);
-      loadProducts();
+      await action(...args);
     } catch (error) {
-      setError('Erro ao transferir reserva.');
-      console.error('Error transferring reservation:', error);
+      console.error(errorMessage, error);
+      throw error;
+    } finally {
+      loadProducts(true);
     }
   };
+
+  const handleDeleteProduct = runAction(
+    (id) => productService.deleteProduct(ownerUid, id), 'Error deleting product:'
+  );
+  const handleReleaseProduct = runAction(
+    (id) => productService.releaseProduct(ownerUid, id), 'Error releasing product:'
+  );
+  const handleReturnProduct = runAction(
+    (id) => productService.returnProduct(ownerUid, id), 'Error returning product:'
+  );
+  const handleTransferReservation = runAction(
+    (id, name) => productService.transferReservation(ownerUid, id, name), 'Error transferring reservation:'
+  );
+  const handleAssignDonor = runAction(
+    (id, name) => productService.assignDonor(ownerUid, id, name), 'Error assigning donor:'
+  );
+  const handleMarkReceived = runAction(
+    (id, name) => productService.markReceived(ownerUid, id, name), 'Error marking as received:'
+  );
 
   const filteredProducts = products.filter(product => {
     const matchesSearch = !searchTerm ||
       product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchTerm.toLowerCase());
+      (product.description || '').toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesDonor = !donorFilter ||
       (product.reservedBy && product.reservedBy.toLowerCase().includes(donorFilter.toLowerCase()));
     
-    return matchesSearch && matchesDonor;
-  });
+    const matchesStatus = statusFilter === 'all' || getProductStatus(product) === statusFilter;
+
+    return matchesSearch && matchesDonor && matchesStatus;
+  }).sort((a, b) =>
+    STATUS_ORDER.indexOf(getProductStatus(a)) - STATUS_ORDER.indexOf(getProductStatus(b))
+  );
 
   const handleCopyPublicLink = async () => {
     try {
@@ -221,30 +227,36 @@ const AdminDashboard = () => {
             </div>
 
             <div className="stats-section">
-              <div className="stat-card">
+              <div
+                className={`stat-card clickable ${statusFilter === 'all' ? 'selected' : ''}`}
+                onClick={() => setStatusFilter('all')}
+              >
                 <h3>Total de Presentes</h3>
                 <span className="stat-number">{products.length}</span>
               </div>
-              <div className="stat-card">
-                <h3>Reservados</h3>
-                <span className="stat-number">
-                  {products.filter(p => p.reservedBy).length}
-                </span>
-              </div>
-              <div className="stat-card">
-                <h3>Disponíveis</h3>
-                <span className="stat-number">
-                  {products.filter(p => !p.reservedBy).length}
-                </span>
-              </div>
+              {STATUS_ORDER.map((status) => (
+                <div
+                  key={status}
+                  className={`stat-card clickable ${statusFilter === status ? 'selected' : ''}`}
+                  onClick={() => setStatusFilter(status)}
+                >
+                  <h3>{status === 'available' ? 'Disponíveis' : status === 'reserved' ? 'Reservados' : status === 'paid' ? 'Pagos' : 'Recebidos'}</h3>
+                  <span className="stat-number">
+                    {products.filter(p => getProductStatus(p) === status).length}
+                  </span>
+                </div>
+              ))}
             </div>
 
             <ProductTable
               products={filteredProducts}
               onEdit={setEditingProduct}
               onDelete={handleDeleteProduct}
-              onUnreserve={handleUnreserveProduct}
+              onRelease={handleReleaseProduct}
+              onReturn={handleReturnProduct}
               onTransferReservation={handleTransferReservation}
+              onAssignDonor={handleAssignDonor}
+              onMarkReceived={handleMarkReceived}
             />
           </>
         )}

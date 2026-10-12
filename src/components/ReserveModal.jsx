@@ -1,21 +1,29 @@
 // Reserve modal component
 import { useState } from 'react';
 import { productService } from '../firebase/services.jsx';
+import { formatPrice } from '../utils/status.js';
+import ConfirmModal from './ConfirmModal.jsx';
 import './ReserveModal.css';
 
 const ReserveModal = ({ ownerUid, product, onClose, onSuccess }) => {
   const [donorName, setDonorName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [confirming, setConfirming] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!donorName.trim()) {
       setError('Por favor, digite seu nome.');
       return;
     }
 
+    setError('');
+    setConfirming(true);
+  };
+
+  const handleConfirm = async () => {
     setLoading(true);
     setError('');
 
@@ -23,6 +31,7 @@ const ReserveModal = ({ ownerUid, product, onClose, onSuccess }) => {
       await productService.reserveProduct(ownerUid, product.id, donorName.trim());
       onSuccess();
     } catch (error) {
+      setConfirming(false);
       if (error.message.includes('já foi reservado')) {
         setError('Este produto já foi reservado por outra pessoa. Por favor, escolha outro presente.');
       } else {
@@ -57,6 +66,7 @@ const ReserveModal = ({ ownerUid, product, onClose, onSuccess }) => {
             <div className="product-details">
               <h3>{product.title}</h3>
               <p>{product.description}</p>
+              {formatPrice(product.price) && <p className="modal-price">{formatPrice(product.price)}</p>}
             </div>
           </div>
           
@@ -90,12 +100,23 @@ const ReserveModal = ({ ownerUid, product, onClose, onSuccess }) => {
                 className="confirm-button"
                 disabled={loading}
               >
-                {loading ? 'Reservando...' : 'Confirmar Reserva'}
+                Confirmar Reserva
               </button>
             </div>
           </form>
         </div>
       </div>
+
+      {confirming && (
+        <ConfirmModal
+          title="Confirmar reserva"
+          message="Confirma a reserva do presente?"
+          confirmLabel="Sim, reservar"
+          loading={loading}
+          onConfirm={handleConfirm}
+          onCancel={() => setConfirming(false)}
+        />
+      )}
     </div>
   );
 };

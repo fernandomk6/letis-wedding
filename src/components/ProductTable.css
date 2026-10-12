@@ -201,7 +201,7 @@
   font-size: 0.9rem;
 }
 
-.empty-state {
+.admin-dashboard .empty-state {
   text-align: center;
   padding: 60px 20px;
   color: #62809a;
@@ -539,7 +539,7 @@
     height: 18px;
   }
   
-  .empty-state {
+  .admin-dashboard .empty-state {
     padding: 40px 15px;
     font-size: 1rem;
   }
@@ -566,4 +566,70 @@
     padding: 10px;
     font-size: 0.9rem;
   }
+}
+
+/* Novos status e ações */
+.status-badge.paid {
+  background: #fff8e1;
+  color: #b26a00;
+}
+
+.status-badge.received {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.price,
+.comment {
+  color: #244667;
+  font-size: 0.9rem;
+}
+
+.comment {
+  max-width: 220px;
+  word-break: break-word;
+}
+
+.donor-button,
+.received-button {
+  color: #2e7d32;
+}
+
+.donor-button:hover,
+.received-button:hover {
+  background: #e8f5e9;
+  color: #1b5e20;
+  transform: translateY(-1px);
+}
+
+.return-button {
+  color: #ff9800;
+}
+
+.return-button:hover {
+  background: #fff3e0;
+  color: #f57c00;
+  transform: translateY(-1px);
+}
+
+.card-actions .donor-button,
+.card-actions .received-button {
+  color: #2e7d32;
+  border-color: #2e7d32;
+}
+
+.card-actions .donor-button:hover,
+.card-actions .received-button:hover {
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+.card-actions .return-button {
+  color: #ff9800;
+  border-color: #ff9800;
+}
+
+.card-actions .return-button:hover {
+  background: #fff3e0;
+  color: #f57c00;
 }

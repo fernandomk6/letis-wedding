@@ -81,3 +81,49 @@ export const getPaletteStyle = (id) => {
     '--pl-accent-rgb': hexToRgb(p.accent),
   };
 };
+
+// Famílias de cor (pela cor primária) para organizar e filtrar o seletor
+export const COLOR_FAMILIES = [
+  { id: 'azul', label: 'Azul', swatch: '#3b6ea5' },
+  { id: 'verde', label: 'Verde', swatch: '#4f8a5b' },
+  { id: 'vermelho', label: 'Vermelho / Rosa', swatch: '#b5495b' },
+  { id: 'roxo', label: 'Roxo', swatch: '#7a5aa8' },
+  { id: 'laranja', label: 'Laranja / Marrom', swatch: '#b8683e' },
+  { id: 'amarelo', label: 'Amarelo / Dourado', swatch: '#d4a82f' },
+  { id: 'neutro', label: 'Neutro', swatch: '#777777' },
+];
+
+const hexToHsl = (hex) => {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  const d = max - min;
+  if (d === 0) return { h: 0, s: 0, l };
+  const s = d / (1 - Math.abs(2 * l - 1));
+  let h;
+  if (max === r) h = ((g - b) / d) % 6;
+  else if (max === g) h = (b - r) / d + 2;
+  else h = (r - g) / d + 4;
+  return { h: (h * 60 + 360) % 360, s, l };
+};
+
+export const getColorFamily = (palette) => {
+  const { h, s } = hexToHsl(palette.primary);
+  if (s < 0.12) return 'neutro';
+  if (h >= 335 || h < 10) return 'vermelho';
+  if (h < 38) return 'laranja';
+  if (h < 62) return 'amarelo';
+  if (h < 170) return 'verde';
+  if (h < 255) return 'azul';
+  return 'roxo';
+};
+
+// Paletas ordenadas por família (ordem de COLOR_FAMILIES) e depois por matiz
+export const PALETTES_BY_FAMILY = [...PALETTES]
+  .map((p) => ({ ...p, family: getColorFamily(p), hue: hexToHsl(p.primary).h }))
+  .sort((a, b) => {
+    const fa = COLOR_FAMILIES.findIndex((f) => f.id === a.family);
+    const fb = COLOR_FAMILIES.findIndex((f) => f.id === b.family);
+    return fa - fb || a.hue - b.hue;
+  });

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { updateCoupleNames, getCoupleNames } from '../firebase/services.jsx';
-import { PALETTES, DEFAULT_PALETTE_ID, getPaletteStyle } from '../theme/palettes.js';
+import { PALETTES_BY_FAMILY, COLOR_FAMILIES, DEFAULT_PALETTE_ID, getPalette } from '../theme/palettes.js';
 import './CoupleSettings.css';
 
 const CoupleSettings = ({ ownerUid }) => {
@@ -14,6 +14,8 @@ const CoupleSettings = ({ ownerUid }) => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [showPaletteModal, setShowPaletteModal] = useState(false);
+  const [familyFilter, setFamilyFilter] = useState('all');
 
   useEffect(() => {
     loadCoupleNames();
@@ -69,6 +71,11 @@ const CoupleSettings = ({ ownerUid }) => {
       setIsLoading(false);
     }
   };
+
+  const selectedPalette = getPalette(formData.paletteId);
+  const visiblePalettes = familyFilter === 'all'
+    ? PALETTES_BY_FAMILY
+    : PALETTES_BY_FAMILY.filter((p) => p.family === familyFilter);
 
   return (
     <div className="couple-settings">
@@ -143,25 +150,19 @@ const CoupleSettings = ({ ownerUid }) => {
 
         <div className="form-group">
           <label>Paleta de Cores da Lista Pública</label>
-          <div className="palette-grid" role="radiogroup" aria-label="Paleta de cores">
-            {PALETTES.map((p) => (
-              <button
-                type="button"
-                key={p.id}
-                role="radio"
-                aria-checked={formData.paletteId === p.id}
-                className={`palette-option ${formData.paletteId === p.id ? 'selected' : ''}`}
-                onClick={() => setFormData(prev => ({ ...prev, paletteId: p.id }))}
-              >
-                <span className="palette-swatches">
-                  {[p.primary, p.secondary, p.accent, p.light, p.background].map((c) => (
-                    <span key={c} style={{ background: c }} />
-                  ))}
-                </span>
-                <span className="palette-name">{p.name}</span>
-              </button>
-            ))}
-          </div>
+          <button
+            type="button"
+            className="palette-trigger"
+            onClick={() => setShowPaletteModal(true)}
+          >
+            <span className="palette-swatches">
+              {[selectedPalette.primary, selectedPalette.secondary, selectedPalette.accent, selectedPalette.light, selectedPalette.background].map((c) => (
+                <span key={c} style={{ background: c }} />
+              ))}
+            </span>
+            <span className="palette-name">{selectedPalette.name}</span>
+            <span className="palette-trigger-action">Alterar</span>
+          </button>
         </div>
 
         <button 
@@ -179,33 +180,61 @@ const CoupleSettings = ({ ownerUid }) => {
         )}
       </form>
 
-      <div className="preview-section">
-        <h3>Prévia da Lista Pública</h3>
-        <div className="preview-text" style={{ ...getPaletteStyle(formData.paletteId), background: 'var(--pl-bg)', color: 'var(--pl-primary)' }}>
-          {formData.brideName && formData.groomName ? (
-            <div>
-              <p>Escolha um presente especial para o casal <strong>{formData.brideName}</strong> e <strong>{formData.groomName}</strong>!</p>
-              {formData.weddingDate && (
-                <p className="date-preview">
-                  📅 Data do casamento: <strong>{new Date(formData.weddingDate).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}</strong>
-                </p>
-              )}
-              {formData.publicMessage && (
-                <p className="message-preview">
-                  💬 {formData.publicMessage}
-                </p>
-              )}
-              {formData.pixKey && (
-                <p className="pix-preview">
-                  Chave PIX para contribuição: <strong>{formData.pixKey}</strong>
-                </p>
-              )}
+      {showPaletteModal && (
+        <div className="palette-modal-overlay" onClick={() => setShowPaletteModal(false)}>
+          <div className="palette-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="palette-modal-header">
+              <h3>Escolha a paleta de cores</h3>
+              <button type="button" className="palette-modal-close" onClick={() => setShowPaletteModal(false)}>×</button>
             </div>
-          ) : (
-            <p>Escolha um presente especial para o casal!</p>
-          )}
+
+            <div className="palette-family-filter">
+              <button
+                type="button"
+                className={`palette-family-chip ${familyFilter === 'all' ? 'active' : ''}`}
+                onClick={() => setFamilyFilter('all')}
+              >
+                Todas
+              </button>
+              {COLOR_FAMILIES.map((f) => (
+                <button
+                  type="button"
+                  key={f.id}
+                  className={`palette-family-chip ${familyFilter === f.id ? 'active' : ''}`}
+                  onClick={() => setFamilyFilter(f.id)}
+                >
+                  <span className="palette-family-dot" style={{ background: f.swatch }} />
+                  {f.label}
+                </button>
+              ))}
+            </div>
+
+            <p className="palette-modal-hint">Deslize para o lado para ver mais paletas.</p>
+            <div className="palette-grid" role="radiogroup" aria-label="Paleta de cores">
+              {visiblePalettes.map((p) => (
+                <button
+                  type="button"
+                  key={p.id}
+                  role="radio"
+                  aria-checked={formData.paletteId === p.id}
+                  className={`palette-option ${formData.paletteId === p.id ? 'selected' : ''}`}
+                  onClick={() => {
+                    setFormData(prev => ({ ...prev, paletteId: p.id }));
+                    setShowPaletteModal(false);
+                  }}
+                >
+                  <span className="palette-swatches">
+                    {[p.primary, p.secondary, p.accent, p.light, p.background].map((c) => (
+                      <span key={c} style={{ background: c }} />
+                    ))}
+                  </span>
+                  <span className="palette-name">{p.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -6,7 +6,8 @@ const ProductForm = ({ product, onSubmit, onClose }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    imageUrl: ''
+    imageUrl: '',
+    price: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -16,7 +17,8 @@ const ProductForm = ({ product, onSubmit, onClose }) => {
       setFormData({
         title: product.title || '',
         description: product.description || '',
-        imageUrl: product.imageUrl || ''
+        imageUrl: product.imageUrl || '',
+        price: typeof product.price === 'number' ? String(product.price) : ''
       });
     }
   }, [product]);
@@ -27,8 +29,10 @@ const ProductForm = ({ product, onSubmit, onClose }) => {
     setLoading(true);
 
     try {
+      const price = formData.price === '' ? null : Number(formData.price);
       const submitData = {
-        ...formData
+        ...formData,
+        price: Number.isFinite(price) && price >= 0 ? price : null
       };
 
       await onSubmit(submitData);
@@ -158,6 +162,22 @@ const ProductForm = ({ product, onSubmit, onClose }) => {
               onChange={handleChange}
               placeholder="Ex: Conjunto 5 peças, material inox..."
               rows="3"
+              disabled={loading}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="price">Valor (R$)</label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              min="0"
+              step="0.01"
+              inputMode="decimal"
+              value={formData.price}
+              onChange={handleChange}
+              placeholder="Ex: 150.00"
               disabled={loading}
             />
           </div>

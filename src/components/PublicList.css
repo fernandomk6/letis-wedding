@@ -182,6 +182,62 @@
   font-weight: 600;
 }
 
+.welcome-section .pix-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pix-copy-inline {
+  background: var(--pl-primary);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.price-filter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px auto 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.price-filter-label {
+  color: var(--pl-primary);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.price-filter input {
+  width: 110px;
+  padding: 8px 12px;
+  border: 2px solid var(--pl-light);
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.price-filter input:focus {
+  outline: none;
+  border-color: var(--pl-accent);
+}
+
+.price-filter-clear {
+  background: none;
+  border: none;
+  color: var(--pl-secondary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .countdown-section {
   margin: 30px 0;
 }

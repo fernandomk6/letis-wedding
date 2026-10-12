@@ -16,23 +16,29 @@ service cloud.firestore {
         allow create, delete: if isOwner(uid);
         allow update: if isOwner(uid)
           || (
-            // Reserva por convidado: só muda campos de reserva
-            resource.data.reservedBy == null
+            // Reserva/pagamento por convidado: só muda campos de reserva
+            // (docs antigos sem `status` e com reservedBy == null contam como disponíveis)
+            (
+              resource.data.get('status', 'available') == 'available'
+              && resource.data.reservedBy == null
+            )
+            && request.resource.data.status in ['reserved', 'paid']
             && request.resource.data.reservedBy is string
             && request.resource.data.reservedBy.size() > 0
             && request.resource.data.reservedBy.size() <= 100
             && request.resource.data.diff(resource.data).affectedKeys()
-                 .hasOnly(['reservedBy', 'reservedAt', 'updatedAt'])
+                 .hasOnly(['status', 'reservedBy', 'reservedAt', 'paidAt', 'updatedAt'])
+          )
+          || (
+            // Comentário do convidado: grava uma vez, só em item reservado/pago
+            resource.data.get('status', 'available') in ['reserved', 'paid']
+            && resource.data.get('comment', null) == null
+            && request.resource.data.comment is string
+            && request.resource.data.comment.size() > 0
+            && request.resource.data.comment.size() <= 500
+            && request.resource.data.diff(resource.data).affectedKeys()
+                 .hasOnly(['comment', 'updatedAt'])
           );
-      }
-
-      // Registro de reservas: convidados criam, só o dono lê
-      match /reservations/{reservationId} {
-        allow read, update, delete: if isOwner(uid);
-        allow create: if request.resource.data.keys().hasOnly(['productId', 'donorName', 'createdAt'])
-          && request.resource.data.donorName is string
-          && request.resource.data.donorName.size() > 0
-          && request.resource.data.donorName.size() <= 100;
       }
 
       // Configurações do casal: leitura pública, escrita do dono

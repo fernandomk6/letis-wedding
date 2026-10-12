@@ -4,8 +4,11 @@ import { useParams } from 'react-router-dom';
 import { productService, getCoupleNames } from '../firebase/services.jsx';
 import ProductCard from './ProductCard.jsx';
 import ReserveModal from './ReserveModal.jsx';
+import PayModal from './PayModal.jsx';
+import CommentModal from './CommentModal.jsx';
 import Header from './Header.jsx';
 import { getPaletteStyle } from '../theme/palettes.js';
+import { getProductStatus, STATUS } from '../utils/status.js';
 import florDate from '../assets/img/flor-date.svg';
 import './PublicList.css';
 
@@ -16,6 +19,9 @@ const PublicList = () => {
   const [error, setError] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showReserveModal, setShowReserveModal] = useState(false);
+  const [showPayModal, setShowPayModal] = useState(false);
+  const [commentProduct, setCommentProduct] = useState(null);
+  const [maxPrice, setMaxPrice] = useState('');
   const [coupleNames, setCoupleNames] = useState(null);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -51,9 +57,9 @@ const PublicList = () => {
     return () => clearInterval(timer);
   }, [coupleNames]);
 
-  const loadProducts = async () => {
+  const loadProducts = async (silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
       const productsData = await productService.getAllProducts(ownerUid);
       setProducts(productsData);
     } catch (error) {
@@ -76,22 +82,38 @@ const PublicList = () => {
   };
 
   const handleReserveClick = (product) => {
-    if (product.reservedBy) {
-      alert('Este produto já foi reservado!');
-      return;
-    }
     setSelectedProduct(product);
     setShowReserveModal(true);
   };
 
-  const handleReserveSuccess = () => {
-    setShowReserveModal(false);
-    setSelectedProduct(null);
-    loadProducts(); // Reload to show updated reservation
+  const handlePayClick = (product) => {
+    setSelectedProduct(product);
+    setShowPayModal(true);
   };
 
-  // Mostrar apenas produtos pendentes (não reservados)
-  const filteredProducts = products.filter(product => product.reservedBy === null);
+  // Após reservar/pagar: fecha o modal, atualiza a lista e pede um comentário
+  const handleActionSuccess = () => {
+    setCommentProduct(selectedProduct);
+    setShowReserveModal(false);
+    setShowPayModal(false);
+    setSelectedProduct(null);
+    loadProducts(true);
+  };
+
+  const pixKey = coupleNames?.pixKey?.trim() || '';
+  const max = maxPrice === '' ? null : Number(maxPrice);
+  const hasPriceFilter = max !== null;
+
+  // Mostrar apenas presentes disponíveis, respeitando o filtro de valor
+  const filteredProducts = products.filter(product => {
+    if (getProductStatus(product) !== STATUS.AVAILABLE) return false;
+    if (!hasPriceFilter) return true;
+    if (typeof product.price !== 'number') return false;
+    return product.price <= max;
+  });
+
+  // Com o filtro de valor ativo, ordena do menor para o maior
+  if (hasPriceFilter) filteredProducts.sort((a, b) => a.price - b.price);
 
   const paletteStyle = getPaletteStyle(coupleNames?.paletteId);
 
@@ -113,7 +135,7 @@ const PublicList = () => {
         <Header ownerUid={ownerUid} />
         <div className="error-container">
           <p>{error}</p>
-          <button onClick={loadProducts} className="retry-button">
+          <button onClick={() => loadProducts()} className="retry-button">
             Tentar Novamente
           </button>
         </div>
@@ -187,11 +209,32 @@ const PublicList = () => {
           <img src={florDate} alt="decoração" className="welcome-divider" />
         </div>
 
+        <div className="price-filter">
+          <label htmlFor="maxPrice" className="price-filter-label">Valor menor:</label>
+          <input
+            type="number"
+            id="maxPrice"
+            min="0"
+            step="0.01"
+            inputMode="decimal"
+            placeholder="R$"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+          />
+          {hasPriceFilter && (
+            <button type="button" className="price-filter-clear" onClick={() => setMaxPrice('')}>
+              Limpar
+            </button>
+          )}
+        </div>
+
         <div className="products-grid">
           {filteredProducts.length === 0 ? (
             <div className="empty-state">
               <p>
-                Nenhum presente pendente no momento.
+                {hasPriceFilter
+                  ? 'Nenhum presente disponível nessa faixa de valor.'
+                  : 'Nenhum presente pendente no momento.'}
               </p>
             </div>
           ) : (
@@ -199,7 +242,9 @@ const PublicList = () => {
               <ProductCard
                 key={product.id}
                 product={product}
+                canPay={Boolean(pixKey) && typeof product.price === 'number' && product.price > 0}
                 onReserveClick={handleReserveClick}
+                onPayClick={handlePayClick}
               />
             ))
           )}
@@ -211,7 +256,25 @@ const PublicList = () => {
           ownerUid={ownerUid}
           product={selectedProduct}
           onClose={() => setShowReserveModal(false)}
-          onSuccess={handleReserveSuccess}
+          onSuccess={handleActionSuccess}
+        />
+      )}
+
+      {showPayModal && selectedProduct && (
+        <PayModal
+          ownerUid={ownerUid}
+          product={selectedProduct}
+          pixKey={pixKey}
+          onClose={() => setShowPayModal(false)}
+          onSuccess={handleActionSuccess}
+        />
+      )}
+
+      {commentProduct && (
+        <CommentModal
+          ownerUid={ownerUid}
+          product={commentProduct}
+          onClose={() => setCommentProduct(null)}
         />
       )}
     </div>
